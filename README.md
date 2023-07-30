@@ -1,6 +1,6 @@
 # domR
 
-** PRIVATE BRANCH OF THE pkg01_domR PACKAGE
+** PRIVATE BRANCH OF THE pkg01_domR PACKAGE **
 
 ## Overview
 The domR package is a series of personal functions that I use in my own project.

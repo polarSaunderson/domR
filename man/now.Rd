@@ -2,24 +2,27 @@
 % Please edit documentation in R/now.R
 \name{now}
 \alias{now}
-\title{Return the current date in easier formats}
+\title{Return the current date and/or time in easier formats}
 \usage{
-now(format = "f")
+now(format = "F")
 }
 \arguments{
-\item{format}{"string" or numeric: Which format to return? See \code{strptime()}
-* "k"(or 1)    "yyyy-mm-dd HH:MM:ss zzz" e.g. "2023-07-29 15:24:43 AEST
-* "F"(or 2)    "yyyy-mm-dd"              e.g. "2023-07-29"
-* "t"(or 3)    "yyyy-mm-dd HH:MM:ss zzz" e.g. "15:24:43"
-* "Y"(or 4)    yyyy                      e.g. 2023
-* "m"(or 5)    m                         e.g. 7
-* "b"(or 6)    "Mth"                     e.g. "Jul"
-* "B"(or 7)    Month                     e.g. "July"
-* "d"(or 8)    dd                        e.g. 29
-* any other letter accepted by \code{strptime()}}
+\item{format}{"string" or numeric: Which format to return? See \code{strptime()}.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{The options are:
+    "k" (or 1)    "yyyy-mm-dd HH:MM:ss zzz"     e.g. "2023-07-29 15:24:43 AEST
+    "F" (or 2)    "yyyy-mm-dd"                  e.g. "2023-07-29"
+    "t" (or 3)    "HH:MM:ss zzz"                e.g. "15:24:43"
+    "Y" (or 4)    yyyy                          e.g. 2023
+    "m" (or 5)    m                             e.g. 7
+    "b" (or 6)    "Mth"                         e.g. "Jul"
+    "B" (or 7)    "Month"                       e.g. "July"
+    "d" (or 8)    dd                            e.g. 29
+    ""            anything else accepted by `strptime()`
+}\if{html}{\out{</div>}}}
 }
 \description{
-When we want the current date, we need awkward and/or verbose
-syntax to get the correct formatting. This function offers some simpler
-options.
+When we want the current date and/or time, we need awkward
+and/or verbose syntax to get the correct formatting. This function offers
+some simpler options.
 }

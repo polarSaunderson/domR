@@ -13,6 +13,6 @@ count_decimal_places(x)
 This function is useful when we are automating things and need
 to round, but aren't always sure what precision we need to round to. The
 code was taken directly from this stackoverflow answer by daroczig:
-https://stackoverflow.com/questions/5173692/how-to-return-number-of-decimal-places-in-r,
+\url{https://stackoverflow.com/questions/5173692/how-to-return-number-of-decimal-places-in-r},
 and I do not really understand how it works.
 }

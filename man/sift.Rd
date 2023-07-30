@@ -10,28 +10,27 @@ sift(x, condition, inConditions = NA, noWarning = FALSE)
 \item{x}{Which data needs to be sifted through?}
 
 \item{condition}{"string": Which condition should be met? There are 3
-necessary parts to this defintion, which must each be separated with a
-single space:
-* ColumnName
-* Operator
-* Value
+necessary parts to this definition, which must each be separated with a
+single space.
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{ColumnName must match the !Exact! name of a column in x, or be
-"rownames".
+\if{html}{\out{<div class="sourceCode">}}\preformatted{These 3 parts are:
+    ColumnName            Which column is the filter based on? Must be an exact match.
+    Operator              Which condition?
+    Value                 Which value?
 
 The possible operators are:
-    * ">"                   Greater than
-    * "<"                   Less than
-    * "in"                  in a range / vector
-    * "!in" or "notIn"      not in a range / vector
-    * "="                   equals / the same as
-    * "=!"                  doesn't equal / is different to
+    ">"                   Greater than
+    "<"                   Less than
+    "in"                  in a range / vector
+    "!in" or "notIn"      not in a range / vector
+    "="                   equals / the same as
+    "=!"                  doesn't equal / is different to
+}\if{html}{\out{</div>}}
 
 If the "in" or "!in" Value is more than just an "a:b" vector, it is
 necessary to supply the vector via the "inConditions" argument, and use
-"ColumnName in vector", or "ColumnName !in vector" as the condition.
-See the examples.
-}\if{html}{\out{</div>}}}
+"ColumnName in vector", or "ColumnName !in vector" as the condition. See
+the examples.}
 
 \item{inConditions}{vector: a vector of values to look for; requires the
 condition to be "ColumnName in vector" or "ColumnName !in vector".}

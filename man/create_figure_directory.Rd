@@ -18,5 +18,5 @@ current date? Defaults to "inProgress".}
 When creating pdfs or png figures, it is easier to store them
 in a separate directory each day. This function simply checks if a
 directory already exists, creates a correctly named directory if not, and
-returns the path so it can easily be written to. Creates the
+returns the path so it can easily be written to.
 }

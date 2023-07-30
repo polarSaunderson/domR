@@ -1,15 +1,16 @@
 create_lean_bib <- function(inputFile, inputBib, outputBib) {
-  #' Create a leaner .bib file for a .rmd file
+  #' Create a leaner .bib file
   #'
   #' @description Instead of sharing a full Zotero library, this function
   #'   creates a leaner .bib file that only stores the citations that were used.
   #'   It has not been extensively tested, but it worked okay for use with the
   #'   phd01 manuscript. The code was modified from this StackOverflow answer:
-  #'   https://stackoverflow.com/questions/65306015/in-rmarkdown-is-there-a-way-to-create-a-bib-file-for-only-those-keys-cited-in
-  #'    It assumes that all references begin with `@` (e.g. `@Saun2022`). It may
-  #'   therefore grab any email addresses in their, so it is not foolproof.
+  #'   [https://stackoverflow.com/questions/65306015/in-rmarkdown-is-there-a-way-to-create-a-bib-file-for-only-those-keys-cited-in]().
+  #'   It assumes that all references begin with `"@"` (e.g. `@Saun2022`). It
+  #'   may therefore grab any email addresses in there, so it is not foolproof.
   #'
-  #' @param inputFile "string": path to the .rmd file to check for citations in
+  #' @param inputFile "string": path to an ".rmd" or ".qmd" file to check for
+  #'   citations in
   #' @param inputBib "string": path to the .bib file used for the inputFile
   #' @param outputBib "string": path location for the new, leaner .bib file
   #'

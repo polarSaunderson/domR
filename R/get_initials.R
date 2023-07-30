@@ -8,8 +8,8 @@ get_initials <- function(x, collapse = "") {
   #'
   #' @param x vector: A vector of strings; we want an initial from each string.
   #' @param collapse string: What should be between the initials? For example,
-  #'   the default "" would give "DJF", whereas "_" would return "D_J_F" and "-"
-  #'   returns "D-J-F".
+  #'   the default "" would give "DJF", whereas "`_`" would return "D_J_F" and
+  #'   "-" returns "D-J-F".
   #'
   #' @examples
   #'      params <- list()

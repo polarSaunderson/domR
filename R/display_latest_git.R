@@ -6,12 +6,12 @@ display_latest_git <- function(display = TRUE) {
   #'   we may want to go back to different version, but can only guess on the
   #'   date of rendering. This function is useful for such an instance because
   #'   it allows us to add the latest git commit before rendering so we have a
-  #'   better idea. Requires the git2r package.
+  #'   better idea. Requires the `git2r` package.
   #'
   #' @param display BINARY: Should the output be displayed? Usually, this is the
   #'   whole purpose of the function, but sometimes the output should be
   #'   suppressed, for example if adding the information to a list of data that
-  #'   will then be saved in the Data/ folder.
+  #'   will then be saved in the "Data/" folder.
   #'
   #' @export
 

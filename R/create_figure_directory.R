@@ -4,7 +4,7 @@ create_figure_directory <- function(relativePath = "", text = "inProgress") {
   #' @description When creating pdfs or png figures, it is easier to store them
   #'   in a separate directory each day. This function simply checks if a
   #'   directory already exists, creates a correctly named directory if not, and
-  #'   returns the path so it can easily be written to. Creates the
+  #'   returns the path so it can easily be written to.
   #'
   #' @param relativePath "string": Where is the "Figures/" directory (or where
   #'   should it be created if it doesn't already exist?). This directory is the

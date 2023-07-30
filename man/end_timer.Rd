@@ -11,7 +11,8 @@ end_timer(startTime, name = "", sound = TRUE)
 
 \item{name}{"string": Name of the process that has been timed}
 
-\item{sound}{BINARY: Should a sound be played upon completion? Requires beepr.}
+\item{sound}{BINARY: Should a sound be played upon completion? Requires
+\code{beepr}.}
 }
 \description{
 This function and \code{start_timer()} are mainly because I can

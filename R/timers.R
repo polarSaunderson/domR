@@ -31,7 +31,8 @@ end_timer <- function(startTime, name = "", sound = TRUE){
   #'
   #' @param startTime Use the output from `start_timer()` as input here
   #' @param name "string": Name of the process that has been timed
-  #' @param sound BINARY: Should a sound be played upon completion? Requires beepr.
+  #' @param sound BINARY: Should a sound be played upon completion? Requires
+  #'    `beepr`.
   #'
   #' @examples
   #' \dontrun{
