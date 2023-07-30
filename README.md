@@ -8,3 +8,9 @@ These are pretty fundamental functions, and follow my own personal logic of usin
 
 ## Public Version
 The public version of this repo can be accessed at: https://github.com/polarSaunderson/domR
+
+# To-Do
+- [ ] Consider the codes in `now()`
+- [ ] Add a good example to `set_if_null()`
+- [ ] Test `create_lean_bib()` with phd02
+
