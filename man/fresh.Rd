@@ -36,4 +36,5 @@ it is actually an issue.
   # Clear everything
   fresh("")
 }
+
 }

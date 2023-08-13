@@ -28,6 +28,7 @@ fresh <- function(toKeep = "f"){
   #'   # Clear everything
   #'   fresh("")
   #' }
+  #'
   #' @export
 
   # Code ----------------------------------------------------------------------!

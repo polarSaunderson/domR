@@ -3,11 +3,13 @@ Type: Package
 Title: Personal Package for Fundamental R Functions
 Version: 0.0.0.1
 Authors@R: 
-    person("Dominic" "Saunderson", "dominicsaunderson@gmail.com",
+    person("Dominic", "Saunderson",
            role = c("aut", "cre"),
+           email = "dominicsaunderson@gmail.com",
            comment = c(ORCID = "0000-0001-7440-0101"))
-Description: My own functions that I use when I approach R. There are likely a 
-    lot of strange ideas in here, but it works for me and helps me do things!
+Description: domR contains personal functions that help with how I approach R. 
+    It is likely that some of these ideas have much simpler solutions, but it 
+    works for me and helps me do things!
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
