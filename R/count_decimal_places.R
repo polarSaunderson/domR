@@ -20,8 +20,14 @@ count_decimal_places <- function(x) {
   for (ii in x) {
     iiIndex <- which(x == ii)
     if (abs(ii - round(ii)) > machPrec) {
-      xDP[iiIndex] <- nchar(strsplit(sub('0+$', '', as.character(ii)),
-                                     ".", fixed = TRUE)[[1]][[2]])
+      iiSplit <-  strsplit(sub('0+$', '',
+                               format(ii, scientific = FALSE)),
+                           ".", fixed = TRUE)[[1]]
+      if (length(iiSplit) == 1) {
+        xDP[iiIndex] <- 0
+      } else {
+        xDP[iiIndex] <- nchar(iiSplit[[2]])
+      }
     } else {
       xDP[iiIndex] <- 0
     }
