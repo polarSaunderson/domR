@@ -25,25 +25,28 @@ cat_list <- function(list, name = NULL,
   # For the items in the list
   listLength <- length(list)
   listNames  <- names(list)
-  allNames   <- get_list_names(list)
+  allNames   <- get_list_names(list, name = deparse(substitute(list)))
 
   # For the recursion
   listDepth  <- listDepth + 1
-  maxDepth   <- max(count_list_depth(list), maxDepth)
-  nameLength <- max(nameLength, max(nchar(allNames)))
+  maxDepth   <- max(count_list_depth(list), maxDepth)   # so no reset each iter.
+  nameLength <- max(nameLength, max(nchar(allNames), 1))# 1 = no error if empty
 
   # List Depth
-  depthCircles <- strrep("O", listDepth)
+  depthCircles <- strrep("O", listDepth)                # O for current depth
   if (listDepth <= maxDepth) {
-    depthLines <- strrep("-", maxDepth - listDepth)
+    depthLines <- strrep("-", maxDepth - listDepth)     # - for further depths
     if (maxDepth < 6) {
-      depthSpaces <- strrep(" ", 5 - maxDepth)
+      depthSpaces <- strrep(" ", 5 - maxDepth)          # >= 5 wide = alignment
+    } else {
+      depthSpaces <- ""
     }
   } else {
     depthLines  <- ""
     depthSpaces <- ""
   }
-  depthBit <- paste0(depthCircles, depthLines, depthSpaces)
+  depthBit <- paste0(depthCircles, depthLines, depthSpaces, " ") # e.g. O--
+  intoBit  <- gsub("O", "º", paste0(depthBit))                   # item point
 
   # List title
   ## This lets us overrule the deparse in recursions so it isn't just "iiData"
@@ -52,45 +55,57 @@ cat_list <- function(list, name = NULL,
   } else {
     listTitle <- deparse(substitute(list))
   }
-  listTitle <- paste0("'", listTitle, "'")
+  if (listTitle != "") listTitle <- paste0("'", listTitle, "'")
 
   # This is printed to tell us if the list is a list or a data frame
   if ("data.frame" %in% is(list)) {
-    typeBit <- "' D.F.:\n"
+    typeBit <- " D.F.:\n"
+    lineBit <- "-"
   } else {
-    typeBit <- "' List:\n"
+    typeBit <- " List:\n"
+    lineBit <- "="
   }
 
   # Display the list title
-  cat("\n", depthBit, listTitle, typeBit,
-      strrep("=", (nameLength + 9 + maxDepth)),
+  cat("\n", depthBit, listTitle, typeBit, sep = "")           # list info
+  cat(strrep(lineBit, (nameLength + 9 + max(maxDepth, 5))),   # underline
       "\n", sep = "")
 
   # Loop through items in the list and print them
-  for (ii in 1:listLength) {
-    iiData <- list[[ii]]
-    iiType <- is(iiData)
+  if (listLength > 0) {
+    for (ii in 1:listLength) {
+      iiData <- list[[ii]]
+      iiType <- is(iiData)
 
-    iiName <- listNames[[ii]]
-    if (!is.list(iiData)) {
-      iiName <- paste0(iiName, strrep(" ", nameLength - nchar(iiName)))
+      iiName <- listNames[[ii]]
+      if (!is.list(iiData)) {
+        iiName <- paste0(iiName, strrep(" ", nameLength - nchar(iiName)))
+      }
+
+      # Print out the items!
+      if ("matrix" %in% iiType) {
+        cat(intoBit)
+        cat(iiName, " ||  Matrix: \n")
+        cat(strrep(".", (nameLength + 9 + max(maxDepth, 5) + 5)),   # underline
+            "\n", sep = "")
+        print(iiData)
+      } else if ("list" %in% iiType) {
+        cat_list(list = iiData, name = iiName, listDepth = listDepth,
+                 maxDepth = maxDepth, nameLength = nameLength) # recursive call
+        cat("\n")
+      } else if ("vector" %in% iiType) {
+        cat(intoBit)
+        cat(iiName, " || ", iiData, "\n")
+      } else {
+        cat(intoBit)
+        cat(iiName, " || \n")
+        print(iiData)
+        cat("\n")
+      }
     }
-
-    # Fancy bullet point
-    intoBit <- gsub("O", "º", paste0(depthBit))
-
-    # Print out the items!
-    if ("matrix" %in% iiType) {
-      cat(intoBit)
-      cat(iiName, " ||  Matrix: \n")
-      print(iiData)
-    } else if ("list" %in% iiType) {
-      Recall(iiData, iiName, listDepth, maxDepth, nameLength) # recursive call
-      cat("\n")
-    } else {
-      cat(intoBit)
-      cat(iiName, " || ", iiData, "\n")
-    }
+  } else {
+    cat(intoBit)
+    cat("Empty List \n")
   }
 }
 

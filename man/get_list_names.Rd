@@ -4,10 +4,16 @@
 \alias{get_list_names}
 \title{Get the names of all values in nested lists}
 \usage{
-get_list_names(list)
+get_list_names(list, depth = 0, name = NULL)
 }
 \arguments{
 \item{list}{The nested list.}
+
+\item{depth}{Used for recursive calls to track the depth.}
+
+\item{name}{Name to be printed at the top of each list. If NULL (the
+default), it matches the name of the 'list' argument. This is mainly here
+for recursion so the "list" in the loop isn't used as the name.}
 }
 \description{
 This function is basically a recursive calling of "names" to
