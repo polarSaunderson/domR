@@ -135,6 +135,20 @@ cat_list <- function(list, name = NULL,
 #
 # cat_list(tt)
 
+# tst <- list()
+# tst[["testing"]] <- list("aaaa" = 1:3,
+#                                  list("cc" = 4:5,
+#                                       "dd" = 6:7))
+# tst[["whoop"]] <- list("ee" = 1:3,
+#                                       1:12)
+# tst[["jj"]] <- terra::rast()
+# tst[["kk"]] <- terra::ext(c(1, 2, 3, 4))
+# tst[["pp"]] <- matrix(1:24, nrow = 6)
+# tst[["mm"]] <- matrix(1:24, nrow = 6) |>
+#   as.data.frame() |>
+#   `colnames<-`(paste0("col", letters[1:4]))
+# tst[["nn"]] <- list()
+#
 
 
 # SCRAPS #
