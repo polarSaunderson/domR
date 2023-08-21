@@ -26,5 +26,6 @@ add_metadata <- function(filePath,
   }
 
   # Add the metadata
-  system2(exPath, args = c(kPair, filePath))
+  # print(keywords)
+  system2(exifPath, args = c(keywords, "-overwrite_original", filePath))
 }
