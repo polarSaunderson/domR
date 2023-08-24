@@ -9,7 +9,8 @@ cat2(x, show = TRUE)
 \arguments{
 \item{x}{The variable that should be displayed. It's name and value will be
 shown. Lists are unlisted. Not tested with complex data types - use with
-caution!}
+caution! If you just want the variable (and not the name), stick with
+\code{cat()} or use \verb{cat3)} which basically adds "\n" before and after x.}
 
 \item{show}{logical If FALSE, the function does nothing; it is useful if
 there are multiple \code{cat2()} calls throughout; set a variable at the
