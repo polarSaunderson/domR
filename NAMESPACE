@@ -3,6 +3,7 @@
 export("%notIn%")
 export(add_metadata)
 export(calc_magnitude)
+export(calc_mode)
 export(cat2)
 export(cat3)
 export(cat_list)
