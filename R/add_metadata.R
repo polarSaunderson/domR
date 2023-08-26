@@ -1,4 +1,5 @@
 add_metadata <- function(filePath,
+                         ...,
                          exifPath = "../../../exiftool-12.65/exiftool.exe") {
   #' Add metadata keywords to a file using exifTools
   #'
@@ -7,12 +8,14 @@ add_metadata <- function(filePath,
   #'   executable.
   #'
   #' @param filePath Which file to add metadata to?
+  #' @param ... Anything else to add as keywords beyond the the params and file
+  #'   code. Include as "name" = value.
   #' @param exifPath The filepath to the ExifTools executable.
   #'
   #' @export
 
   # Code -----------------------------------------------------------------------
-  # The current file code and latest git commit
+  # Current file code and latest git commit
   keywords <- paste0("-Keywords=", domR::get_current_file_codes())
 
   # Params
@@ -25,7 +28,20 @@ add_metadata <- function(filePath,
     keywords <- paste(keywords, iiBit)
   }
 
+  # Anything else?
+  dots <- list(...)
+  if (length(dots > 0)) {
+    dotNames   <- names(dots)
+    for (ii in seq_along(dots)) {
+      iiDot    <- paste0("-Keywords=",
+                         paste(paste(dotNames[ii])))
+      iiData   <- paste0(dots[[ii]], collapse = ",")
+      iiBit    <- paste(iiDot, iiData, sep = ":")
+      keywords <- paste(keywords, iiBit)
+    }
+  }
+
   # Add the metadata
-  # print(keywords)
   system2(exifPath, args = c(keywords, "-overwrite_original", filePath))
+  return(invisible(keywords))
 }
