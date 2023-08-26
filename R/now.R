@@ -1,37 +1,32 @@
 now <- function(format = "F") {
-  #' Return the current date and/or time in easier formats
+  #' Return the formatted current date and/or time quicker
   #'
   #' @description When we want the current date and/or time, we need awkward
   #'   and/or verbose syntax to get the correct formatting. This function offers
-  #'   some simpler options.
+  #'   some simpler options. Basically just a wrapper around
+  #'   `format(Sys.time(), %%)`, but "n" and "t" behave differently.
   #'
-  #' @param format "string" or numeric: Which format to return? See `strptime()`.
+  #' @param format "string": Which format to return? See `strptime()`.
   #'
   #'     The options are:
-  #'         "k" (or 1)    "yyyy-mm-dd HH:MM:ss zzz"     e.g. "2023-07-29 15:24:43 AEST
-  #'         "F" (or 2)    "yyyy-mm-dd"                  e.g. "2023-07-29"
-  #'         "t" (or 3)    "HH:MM:ss zzz"                e.g. "15:24:43"
-  #'         "Y" (or 4)    yyyy                          e.g. 2023
-  #'         "m" (or 5)    m                             e.g. 7
-  #'         "b" (or 6)    "Mth"                         e.g. "Jul"
-  #'         "B" (or 7)    "Month"                       e.g. "July"
-  #'         "d" (or 8)    dd                            e.g. 29
-  #'         ""            anything else accepted by `strptime()`
+  #'         "n"    "yyyy-mm-dd HH:MM:ss zzz"     e.g. "2023-07-29 15:24:43 AEST
+  #'         "F"    "yyyy-mm-dd"                  e.g. "2023-07-29"
+  #'         "t"    "HH:MM:ss zzz"                e.g. "15:24:43"
+  #'         "Y"    yyyy                          e.g. 2023
+  #'         "m"    m                             e.g. 7
+  #'         "b"    "Mth"                         e.g. "Jul"
+  #'         "B"    "Month"                       e.g. "July"
+  #'         "d"    dd                            e.g. 29
+  #'         ""     anything else accepted by `strptime()`
   #'
   #' @export
 
   # Code -----------------------------------------------------------------------
   today <- Sys.time()
 
-  # Handle if argument is numeric
-  if (is.numeric(format)) {
-    format <- switch(format,
-                     "k", "F", "t", "Y", "m", "b", "B", "d", format)
-  }
-
   # Format!
   now <- switch(format,
-                "k" = today,                                  # "2022-11-23 15:24:43 AEST"
+                "n" = today,                                  # "2022-11-23 15:24:43 AEST"
                 "F" = format(today, "%F"),                    # "2022-11-23"
                 "t" = format(today, "%H:%M:%s"),              # "15:24:43"
                 "Y" = format(today, "%Y") |> as.integer(),    # 2022

@@ -16,13 +16,20 @@ In some functions, it is necessary to create an argument that
 has a default value defined by the other arguments (i.e. calculated
 within the function), but that can nevertheless be overwritten if
 required. We therefore set the argument value as NULL, and can use this
-function within the function to determine whether the argument's value
-needs to be calculated or not. This function just makes it cleaner,
+function within another function to determine whether the argument's
+value needs to be calculated or not. This function just makes it cleaner,
 clearer and quicker to see what is happening compared to the default
 syntax for this process.
 }
 \examples{
-  customisableArgument <- NULL
-  customisableArgument <- set_if_null(customisableArgument, 0.5)
+  # simpify example with unnecessary use
+  xFunc <- function(x, y = NULL) {
+    if (x < 0) {
+      y <- set_if_null(y, 2)
+    } else {
+      y <- set_if_null(y, 3)
+    }
+    z <- x ^ y
+  }
 
 }

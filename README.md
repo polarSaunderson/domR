@@ -12,7 +12,7 @@ The public version of this repo can be accessed at:
 
 ## To-Do
 ### 2023-07-30 
-- [ ] Consider the codes in `now()`
-- [ ] Add a good example to `set_if_null()` - see `figuR::add_axis()`
+- [X] Consider the codes in `now()`
+- [X] Add a good example to `set_if_null()` - see `figuR::add_axis()`
 - [ ] Test `create_lean_bib()` with phd02
 
