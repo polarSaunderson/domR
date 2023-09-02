@@ -67,3 +67,22 @@ cat3 <- function(..., show = TRUE) {
     cat("\n", dots, "\n")
   }
 }
+
+
+cat4 <- function(x, show = TRUE) {
+  #' Concatenate the name and variable, and show the location
+  #'
+  #' @description This function combines [which_line()] and [cat2()]. It
+  #'   therefore shows the value and name of a variable, and the location of it.
+  #'
+  #' @param x The variable to show.
+  #' @inheritParams cat2
+  #'
+  #' @export
+
+  # Code -----------------------------------------------------------------------
+  print_line("-", 1, 0)
+  cat2(x, show = show, name = deparse(substitute(x)))
+  cat("\n")
+  which_line(functionName = "cat4", skipInNested = TRUE)
+}
