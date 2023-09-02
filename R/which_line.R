@@ -12,16 +12,10 @@ which_line <- function(functionName = "which_line", skipInNested = TRUE) {
   #'   printed on.
   #'
   #'   It requires rstudioapi (i.e. it only works with that, so not pure R).
-  #'
-  #'   The only "slight" issue, is that it currently prints out every instance
-  #'   of the 'functionName' in the file it is called in... (totally defeating
-  #'   half of its point!).
+  #'   This is to identify the document  and save it. It then uses
   #'
   #'   The code was inspired by this stackoverflow question:
   #'     [https://stackoverflow.com/questions/59537482/how-to-get-line-number-of-a-function-call-in-r]().
-  #'
-  #'   It uses [readLines()], so searches through the last saved version of the
-  #'   file - i.e. save the files before using it!
   #'
   #' @param functionName The text to search for in the file; if not
   #'   [which_line()] (the default), it should match the name of the parents
@@ -38,11 +32,34 @@ which_line <- function(functionName = "which_line", skipInNested = TRUE) {
 
   # Which file was the function called in?
   filePath  <- rstudioapi::getSourceEditorContext()$path
+  rstudioapi::documentSave()
   fileName  <- basename(filePath)
 
   # Which line of the file is this found on?
   fileText  <- readLines(filePath)
   fileLines <- which(grepl(functionName, fileText))
+
+  # Tracking which one it is
+  if (!exists("whichLine_info")) {
+    # print("creating new info")
+    .GlobalEnv$whichLine_info <- list()
+  } # else { print("it already exists") }
+
+  if (fileName %in% names(.GlobalEnv$whichLine_info)) {
+    # print("adding 1")
+    .GlobalEnv$whichLine_info[[fileName]] <- .GlobalEnv$whichLine_info[[fileName]] + 1
+  } else {
+    # print("creating 1")
+    .GlobalEnv$whichLine_info[[fileName]] <- 1
+  }
+
+  fileLineIndex <- .GlobalEnv$whichLine_info[[fileName]]
+  # print(fileLineIndex)
+
+  if (.GlobalEnv$whichLine_info[[fileName]] == length(fileLines)) {
+    # print("removing")
+    rm(whichLine_info, envir = .GlobalEnv)
+  }
 
   # Which functions have been called?
   functionList <- x
@@ -56,7 +73,7 @@ which_line <- function(functionName = "which_line", skipInNested = TRUE) {
   funcLines <- attr(x[[1]], "srcref")
 
   # Display
-  cat("-- On line/s", fileLines, "of", fileName)
+  cat("-- On line", fileLines[[fileLineIndex]], "of", fileName)
   for (ii in seq_along(functionList)) {
     cat("\n-- ", paste(rep("-- ", ii), collapse = ""),
         "called on line ",
