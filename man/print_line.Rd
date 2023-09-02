@@ -4,13 +4,17 @@
 \alias{print_line}
 \title{Print a line to the console to help delineate output}
 \usage{
-print_line(lineType = "=", width = 22)
+print_line(lineType = "=", nStart = 1, nEnd = 1, width = 22)
 }
 \arguments{
 \item{lineType}{"string": The symbol/s that will be printed to create a
 line across the console.}
 
-\item{width}{numeric : How many times should the above be repeated? Usually
+\item{nStart}{numeric: How many \verb{\\n} should be included \emph{before} the line?}
+
+\item{nEnd}{numeric: How many \verb{\\n} should be included \emph{after} the line?}
+
+\item{width}{numeric: How many times should the above be repeated? Usually
 unnecessary, but change it if screen is particularly wide or narrow.}
 }
 \description{
@@ -19,7 +23,8 @@ particularly helpful to group output to the console or when testing.
 }
 \examples{
   print_line()
-  print_line("-", 10)
-  print_line("+-", 25)
+  print_line("=", 1, 0)
+  print_line("-", width = 10)
+  print_line("+-", width = 25)
 
 }
