@@ -22,10 +22,25 @@ cat_list <- function(list, name = NULL,
   #' @export
 
   # Code -----------------------------------------------------------------------
+  # Verify input
+  listType <- methods::is(list)
+  if ("list" %notIn% listType) {
+    if ("environment" %in% listType) {
+      # stop("Environments are still a work in progress! \n",
+           # "  An error with deparse(substitute())?")
+      name <- deparse(substitute(list))
+      list <- as.list(list)
+    } else {
+      stop("Please enter a list, data.frame or environment!")
+    }
+  } else {
+    name <- set_if_null(name, deparse(substitute(list)))
+  }
+
   # For the items in the list
   listLength <- length(list)
   listNames  <- names(list)
-  allNames   <- get_list_names(list, name = deparse(substitute(list)))
+  allNames   <- get_list_names(list, name = name) # deparse(substitute(list)))
 
   # For the recursion
   listDepth  <- listDepth + 1
@@ -55,15 +70,19 @@ cat_list <- function(list, name = NULL,
   } else {
     listTitle <- deparse(substitute(list))
   }
+
   if (listTitle != "") listTitle <- paste0("'", listTitle, "'")
 
   # This is printed to tell us if the list is a list or a data frame
-  if ("data.frame" %in% is(list)) {
+  if ("data.frame" %in% listType) {
     typeBit <- " D.F.:\n"
-    lineBit <- "-"
+    lineBit <- "~"
+  } else if ("environment" %in% listType) {
+    typeBit <- " .envir:\n"
+    lineBit <- "="
   } else {
     typeBit <- " List:\n"
-    lineBit <- "="
+    lineBit <- "-"
   }
 
   # Display the list title
@@ -93,9 +112,12 @@ cat_list <- function(list, name = NULL,
         cat_list(list = iiData, name = iiName, listDepth = listDepth,
                  maxDepth = maxDepth, nameLength = nameLength) # recursive call
         cat("\n")
-      } else if ("vector" %in% iiType) {
+      }  else if ("vector" %in% iiType) {
         cat(intoBit)
         cat(iiName, " || ", iiData, "\n")
+      } else if ("NULL" %in% iiType) {
+        cat(intoBit)
+        cat(iiName, " ||  NULL \n")
       } else {
         cat(intoBit)
         cat(iiName, " || \n")
