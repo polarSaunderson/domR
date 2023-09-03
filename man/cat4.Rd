@@ -4,7 +4,7 @@
 \alias{cat4}
 \title{Concatenate the name and variable, and show the location}
 \usage{
-cat4(x, show = TRUE)
+cat4(x, show = TRUE, skipCatCall = TRUE)
 }
 \arguments{
 \item{x}{The variable to show.}

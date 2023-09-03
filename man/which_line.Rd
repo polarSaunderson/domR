@@ -4,37 +4,36 @@
 \alias{which_line}
 \title{Print out the line number/s a function is called on}
 \usage{
-which_line(functionName = "which_line", skipInNested = TRUE)
+which_line(skipCatCall = TRUE)
 }
 \arguments{
-\item{functionName}{The text to search for in the file; if not
-\code{\link[=which_line]{which_line()}} (the default), it should match the name of the parents
-function that it is being called in.}
-
-\item{skipInNested}{When nested in another function (for example \code{\link[=cat4]{cat4()}}),
-should the call to that function (e.g.\code{\link[=cat4]{cat4()}}) be included in the print
+\item{skipCatCall}{When nested in another function (for example \code{\link[=cat4]{cat4()}}),
+should the call to that function (e.g.\code{cat4(x)}) be included in the print
 out of where \code{\link[=which_line]{which_line()}} was called from? TRUE by default.}
 }
 \description{
 This function is not complete, but it is getting somewhere...
 Imagine when debugging, but without actual errors. You're just trying to
 find out the value of a variable at different stages. We want to know
-which line of a file that is on.
+which line of a file that is on. This is therefore essentially a wrapper
+around using \code{.traceback(x)} when we haven't an actual error to
+traceback.
 
 This function is mainly designed to be used inside the \code{\link[=cat4]{cat4()}} function.
-That function is a combination of \code{\link[=cat2]{cat2()}} and \code{\link[=which_line]{which_line()}}, so it
-tells us what the variable name is, the value, and what line it was
-printed on.
+\code{\link[=cat4]{cat4()}} is a combination of \code{\link[=cat2]{cat2()}} and \code{\link[=which_line]{which_line()}}, so it tells the
+user the variable name, the variable value, and what the location.
 
-It requires rstudioapi (i.e. it only works with that, so not pure R).
+\strong{IMPORTANT} This function (and therefore \code{\link[=cat4]{cat4()}} is only designed to
+be used interactively in a "qmd" or "rmd" notebook.
 
-The only "slight" issue, is that it currently prints out every instance
-of the 'functionName' in the file it is called in... (totally defeating
-half of its point!).
+\strong{IMPORTANT} The line identification of the call file \strong{WILL} be
+incorrect if:
+the \emph{exact} same call is used in different chunk before the chunk used.
+
+For identifying the current file it is called in, it requires the
+\code{rstudioapi} package (i.e. it only works with that, so not pure R) to
+identify the document and save it.
 
 The code was inspired by this stackoverflow question:
 \url{https://stackoverflow.com/questions/59537482/how-to-get-line-number-of-a-function-call-in-r}.
-
-It uses \code{\link[=readLines]{readLines()}}, so searches through the last saved version of the
-file - i.e. save the files before using it!
 }

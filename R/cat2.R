@@ -69,7 +69,7 @@ cat3 <- function(..., show = TRUE) {
 }
 
 
-cat4 <- function(x, show = TRUE) {
+cat4 <- function(x, show = TRUE, skipCatCall = TRUE) {
   #' Concatenate the name and variable, and show the location
   #'
   #' @description This function combines [which_line()] and [cat2()]. It
@@ -81,8 +81,9 @@ cat4 <- function(x, show = TRUE) {
   #' @export
 
   # Code -----------------------------------------------------------------------
-  print_line("-", 1, 0)
-  cat2(x, show = show, name = deparse(substitute(x)))
-  cat("\n")
-  which_line(functionName = "cat4", skipInNested = TRUE)
+  if (isTRUE(show)) {
+    print_line("-", 1, 0)
+    cat2(x, show = show, name = deparse(substitute(x)))
+    which_line(skipCatCall = skipCatCall)
+  }
 }
