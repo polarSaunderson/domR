@@ -11,6 +11,13 @@ The public version of this repo can be accessed at:
   https://github.com/polarSaunderson/domR
 
 ## To-Do
+### 2023-09-03
+- [ ] In `which_line()`, figure out identity within chunk of existing notebook
+- [ ] Rename `cat` functions? Currently, they are:
+    - cat2 : name & variable
+    - cat3 : x with \n
+    - cat4 : name, variable & location / traceback
+
 ### 2023-07-30 
 - [X] Consider the codes in `now()`
 - [X] Add a good example to `set_if_null()` - see `figuR::add_axis()`
