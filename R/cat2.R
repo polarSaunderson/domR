@@ -10,7 +10,7 @@ cat2 <- function(x, show = TRUE, name = NULL) {
   #' @param x The variable that should be displayed. It's name and value will be
   #'   shown. Lists are unlisted. Not tested with complex data types - use with
   #'   caution! If you just want the variable (and not the name), stick with
-  #'   `cat()`, or use `cat3()`, which basically adds "\n" before and after x.
+  #'   `cat()`, or use `cat3()`, which basically adds a newline `\n` before and after x.
   #' @param show LOGICAL: If FALSE, the function does nothing; it is useful if
   #'   there are multiple `cat2()` calls throughout; set a variable at the
   #'   beginning and use that as the 'show' argument in each `cat2()` call.
@@ -44,7 +44,7 @@ cat2 <- function(x, show = TRUE, name = NULL) {
 cat3 <- function(..., show = TRUE) {
   #' Concatenate a variable
   #'
-  #' @description This function is simply `cat()` but adds a newline "\n" before
+  #' @description This function is simply `cat()` but adds a newline `\n` before
   #'   and after to quicken things up.
   #'
   #' @param ... The variable/s that should be displayed. The values will be
@@ -77,6 +77,7 @@ cat4 <- function(x, show = TRUE, skipCatCall = TRUE) {
   #'
   #' @param x The variable to show.
   #' @inheritParams cat2
+  #' @inheritParams which_line
   #'
   #' @export
 

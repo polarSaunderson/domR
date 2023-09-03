@@ -9,7 +9,7 @@ calc_mode <- function(x) {
 
   # Code -----------------------------------------------------------------------
   allX   <- unique(x)
-  countX <- match(x, u) |> tabulate()
+  countX <- match(x, allX) |> tabulate()
   if (length(countX) != length(x)) {
     allX[countX == max(countX)]
   } else {

@@ -61,7 +61,7 @@ cat_list <- function(list, name = NULL,
     depthSpaces <- ""
   }
   depthBit <- paste0(depthCircles, depthLines, depthSpaces, " ") # e.g. O--
-  intoBit  <- gsub("O", "º", paste0(depthBit))                   # item point
+  intoBit  <- gsub("O", "o", paste0(depthBit))                   # item point
 
   # List title
   ## This lets us overrule the deparse in recursions so it isn't just "iiData"
@@ -94,7 +94,7 @@ cat_list <- function(list, name = NULL,
   if (listLength > 0) {
     for (ii in 1:listLength) {
       iiData <- list[[ii]]
-      iiType <- is(iiData)
+      iiType <- methods::is(iiData)
 
       iiName <- listNames[[ii]]
       if (!is.list(iiData)) {

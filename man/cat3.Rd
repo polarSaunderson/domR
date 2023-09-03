@@ -20,6 +20,6 @@ the calls, but the calls can remain in place if further \code{cat3()} use is
 likely.}
 }
 \description{
-This function is simply \code{cat()} but adds a newline "\n" before
+This function is simply \code{cat()} but adds a newline \verb{\\n} before
 and after to quicken things up.
 }

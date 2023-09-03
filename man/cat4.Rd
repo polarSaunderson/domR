@@ -15,6 +15,10 @@ beginning and use that as the 'show' argument in each \code{cat2()} call.
 Simply changing that to FALSE allows the function to be run without all
 the calls, but the calls can remain in place if further \code{cat2()} use is
 likely.}
+
+\item{skipCatCall}{When nested in another function (for example \code{\link[=cat4]{cat4()}}),
+should the call to that function (e.g.\code{cat4(x)}) be included in the print
+out of where \code{\link[=which_line]{which_line()}} was called from? TRUE by default.}
 }
 \description{
 This function combines \code{\link[=which_line]{which_line()}} and \code{\link[=cat2]{cat2()}}. It

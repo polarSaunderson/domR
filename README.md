@@ -17,6 +17,8 @@ The public version of this repo can be accessed at:
     - cat2 : name & variable
     - cat3 : x with \n
     - cat4 : name, variable & location / traceback
+- [x] ASCII decision on cat_line
+- [?] Check doesn't like undefined "params" or "whichLine_info" 
 
 ### 2023-07-30 
 - [X] Consider the codes in `now()`
