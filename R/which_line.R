@@ -27,8 +27,6 @@ which_line <- function(functionName = "which_line", skipInNested = TRUE) {
   #' @export
 
   # Code -----------------------------------------------------------------------
-  # Get some information about the last calls
-  x <- .traceback(x = 1)
 
   # Which file was the function called in?
   filePath  <- rstudioapi::getSourceEditorContext()$path
@@ -38,6 +36,7 @@ which_line <- function(functionName = "which_line", skipInNested = TRUE) {
   # Which line of the file is this found on?
   fileText  <- readLines(filePath)
   fileLines <- which(grepl(functionName, fileText))
+  # cat2(fileLines)
 
   # Tracking which one it is
   if (!exists("whichLine_info")) {
@@ -61,23 +60,79 @@ which_line <- function(functionName = "which_line", skipInNested = TRUE) {
     rm(whichLine_info, envir = .GlobalEnv)
   }
 
-  # Which functions have been called?
-  functionList <- x
-  functionList[[1]] <- NULL          # ignore the which_line function call
-  if (isTRUE(skipInNested)) {
-  # if (functionName != "which_fun") { # ignore function nesting which_fun
-    functionList[[1]] <- NULL
-  }
+  # Get some information about the last calls
+  functionList <- .traceback(1)
+  # cat2(functionList)
 
-  # Which line of the function/s are we on?
-  funcLines <- attr(x[[1]], "srcref")
-
-  # Display
-  cat("-- On line", fileLines[[fileLineIndex]], "of", fileName)
+  # Which line?
+  # for (ii in seq_along(functionList)[-length(functionList)]) {
   for (ii in seq_along(functionList)) {
-    cat("\n-- ", paste(rep("-- ", ii), collapse = ""),
+    # print(ii)
+    if (ii > 1) {#< length(functionList)) {
+      iiLine <- attr(functionList[[ii - 1]], "srcref")[[1]]
+    # } else {
+      # iiLine <- ""
+    # }
+    # cat2(iiLine)
+    cat("\n-- ", paste(rep("-- ", ii - 2), collapse = ""),
         "called on line ",
-        paste(funcLines[[ii]], "of", functionList[[ii]]), sep = "")
+        paste(iiLine, "of", functionList[[ii]]), sep = "")
+    }
   }
-  cat("\n")
+
+  if (length(functionList) == 0) {
+    cat("\n-- ", #rep("-- ", length(functionList)),
+        "called on line", fileLines[[fileLineIndex]],
+        "of", fileName, "\n")
+  }
 }
+
+  #
+  #
+  #
+  #
+  # Which functions have been called?
+  # x <- .traceback(x = 1)
+  # functionList <- x
+  # cat2(functionList)
+  #
+  # # Which line of the function/s are we on?
+  # funcLines <- attr(x[[1]], "srcref")
+  # cat2(funcLines)
+  #
+  # functionList[[1]] <- NULL          # ignore the which_line function call
+  # cat2(functionList)
+  # # funcLines <- funcLines[-1]
+  # # funcLines[[1]][1] <- NULL          # ignore the which_line function call
+  # cat2(funcLines)
+  # if (isTRUE(skipInNested)) {
+  # # if (functionName != "which_fun") { # ignore function nesting which_fun
+  #   functionList[[1]] <- NULL
+  #   funcLines <- funcLines[-1]
+  # }
+  #
+  # cat2(functionList)
+  # cat2(funcLines)
+  #
+  # # # Display
+  # if (length(functionList) == 0) {
+  #   cat("-- On line", fileLines[[fileLineIndex]], "of", fileName)
+  # } else {
+  #   for (ii in seq_along(functionList)) {
+  #     cat("\n-- ", paste(rep("-- ", ii), collapse = ""),
+  #         "called on line ",
+  #         paste(funcLines[[ii]], "of", functionList[[ii]]), sep = "")
+  #   }
+  #   cat("\n-- called on line", fileLines[[fileLineIndex]], "of", fileName)
+  # }
+  # cat("\n")
+
+  # # Display
+  # cat("-- On line", fileLines[[fileLineIndex]], "of", fileName)
+  # for (ii in seq_along(functionList)) {
+  #   cat("\n-- ", paste(rep("-- ", ii), collapse = ""),
+  #       "called on line ",
+  #       paste(funcLines[[ii]], "of", functionList[[ii]]), sep = "")
+  # }
+  # cat("\n")
+# }
