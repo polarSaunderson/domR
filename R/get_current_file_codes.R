@@ -40,9 +40,11 @@ get_current_file_codes <- function(addGit = TRUE) {
 
   # Last git SHA
   if (isTRUE(addGit)) {
-    lastGitCommit <- git2r::last_commit()$sha |>
-      substring(1, 7)
-    returnCodes <- paste(returnCodes, lastGitCommit, sep = "_")
+    if (system.file(package = "git2r") != "") {
+      lastGitCommit <- git2r::last_commit()$sha |>
+        substring(1, 7)
+      returnCodes <- paste(returnCodes, lastGitCommit, sep = "_")
+    }
   }
   return(returnCodes)
 }

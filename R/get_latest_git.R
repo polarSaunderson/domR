@@ -20,6 +20,11 @@ get_latest_git <- function(display = TRUE, incGitCommit = FALSE) {
   #' @export
 
   # Code -----------------------------------------------------------------------
+  if (system.file(package = "git2r") == "") {
+    warning('The git2r package must be installed! Use install.packages("git2r").')
+    return()
+  }
+
   # Get the last commit on the *current* branch
   gitCommit <- git2r::last_commit()
 
