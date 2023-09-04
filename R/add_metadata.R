@@ -1,6 +1,7 @@
 add_metadata <- function(filePath,
                          ...,
-                         exifPath = "../../../exiftool-12.65/exiftool.exe") {
+                         exifPath  = "../../../exiftool-12.65/exiftool.exe",
+                         addToFile = TRUE) {
   #' Add metadata keywords to a file using exifTools
   #'
   #' @description A way to document which params were used for a figure, and to
@@ -11,6 +12,8 @@ add_metadata <- function(filePath,
   #' @param ... Anything else to add as keywords beyond the the params and file
   #'   code. Include as "name" = value.
   #' @param exifPath The filepath to the ExifTools executable.
+  #' @param addToFile BINARY: If FALSE, the keywords are invisibly returned, and
+  #'   the call to exifTools is skipped.
   #'
   #' @export
 
@@ -42,6 +45,8 @@ add_metadata <- function(filePath,
   }
 
   # Add the metadata
-  system2(exifPath, args = c(keywords, "-overwrite_original", filePath))
+  if (isTRUE(addToFile)) {
+    system2(exifPath, args = c(keywords, "-overwrite_original", filePath))
+  }
   return(invisible(keywords))
 }

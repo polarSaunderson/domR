@@ -4,7 +4,12 @@
 \alias{add_metadata}
 \title{Add metadata keywords to a file using exifTools}
 \usage{
-add_metadata(filePath, ..., exifPath = "../../../exiftool-12.65/exiftool.exe")
+add_metadata(
+  filePath,
+  ...,
+  exifPath = "../../../exiftool-12.65/exiftool.exe",
+  addToFile = TRUE
+)
 }
 \arguments{
 \item{filePath}{Which file to add metadata to?}
@@ -13,6 +18,9 @@ add_metadata(filePath, ..., exifPath = "../../../exiftool-12.65/exiftool.exe")
 code. Include as "name" = value.}
 
 \item{exifPath}{The filepath to the ExifTools executable.}
+
+\item{addToFile}{BINARY: If FALSE, the keywords are invisibly returned, and
+the call to exifTools is skipped.}
 }
 \description{
 A way to document which params were used for a figure, and to
