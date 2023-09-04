@@ -2,28 +2,35 @@
 % Please edit documentation in R/add_metadata.R
 \name{add_metadata}
 \alias{add_metadata}
-\title{Add metadata keywords to a file using exifTools}
+\title{Add metadata keywords to a pdf using exifTools}
 \usage{
 add_metadata(
   filePath,
   ...,
-  exifPath = "../../../exiftool-12.65/exiftool.exe",
-  addToFile = TRUE
+  incGit = TRUE,
+  incSession = FALSE,
+  exifPath = "../../../exiftool-12.65/exiftool.exe"
 )
 }
 \arguments{
-\item{filePath}{Which file to add metadata to?}
+\item{filePath}{Which file to add metadata to? Will fail if not a ".pdf".
+In future, more options may be added if that makes sense.}
 
-\item{...}{Anything else to add as keywords beyond the the params and file
-code. Include as "name" = value.}
+\item{...}{Any additional information that needs to be included beyond the
+params and file code? Include as '"name" =  value'.}
 
-\item{exifPath}{The filepath to the ExifTools executable.}
+\item{incGit}{BINARY: Should the full output from \code{\link[=get_latest_git]{get_latest_git()}} be
+included? Even if FALSE, the hash of the last commit is still included.}
 
-\item{addToFile}{BINARY: If FALSE, the keywords are invisibly returned, and
-the call to exifTools is skipped.}
+\item{incSession}{BINARY: Should the output from \code{\link[=sessionInfo]{sessionInfo()}} be
+included? This is currently not implemented as it looks more complex than
+I had anticipated.}
+
+\item{exifPath}{The file path to the ExifTools executable.}
 }
 \description{
-A way to document which params were used for a figure, and to
-track the file and latest git commit. Only tested with the windows
-executable.
+A way to help document which params were used for a figure, to
+track which file it was produced from, and the last git commit before it
+was created, plus any other information we want to add. Only tested with
+the windows executable exiftools. Only works for pdf files right now.
 }

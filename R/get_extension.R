@@ -12,5 +12,5 @@ get_extension <- function(filename) {
   # Figure out extension
   ext <- strsplit(filename, split = ".", fixed = TRUE)[[1]] |>
     (function(x) x[length(x)]) ()
-  return(ext)
+  return(tolower(ext))
 }

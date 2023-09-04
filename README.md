@@ -11,6 +11,11 @@ The public version of this repo can be accessed at:
   https://github.com/polarSaunderson/domR
 
 ## To-Do
+### 2023-09-05
+- [ ] Change add_metadata; it should probably be split into get_metadata, and 
+      then add_metadata, which formats it; choice of where it is going (e.g.
+      as PDF keywords via exifTools, as NetCDF atts, or as part of json / yaml).
+
 ### 2023-09-04
 - [ ] Figure out lists and saving data in relation to version control 
 - [ ] Unify the 'cat' functions - it should handle if a vector goes to cat_list,
