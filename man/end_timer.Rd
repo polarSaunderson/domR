@@ -4,12 +4,13 @@
 \alias{end_timer}
 \title{Ends the timer}
 \usage{
-end_timer(startTime, name = "", sound = TRUE)
+end_timer(startTime, ..., sound = TRUE)
 }
 \arguments{
 \item{startTime}{Use the output from \code{\link[=start_timer]{start_timer()}} as input here}
 
-\item{name}{"string": Name of the process that has been timed}
+\item{...}{"string": Name of the process that has been timed; all arguments
+will be displayed in the order entered using \code{\link[=cat3]{cat3()}}.}
 
 \item{sound}{BINARY: Should a sound be played upon completion? Requires
 \code{beepr}.}

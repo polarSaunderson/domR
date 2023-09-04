@@ -18,7 +18,7 @@ start_timer <- function() {
   return(proc.time())
 }
 
-end_timer <- function(startTime, name = "", sound = TRUE){
+end_timer <- function(startTime, ..., sound = TRUE){
   #' Ends the timer
   #'
   #' @description This function and [start_timer()] are mainly because I can
@@ -30,7 +30,8 @@ end_timer <- function(startTime, name = "", sound = TRUE){
   #'   processes can be chained together. See the usage examples.
   #'
   #' @param startTime Use the output from [start_timer()] as input here
-  #' @param name "string": Name of the process that has been timed
+  #' @param ... "string": Name of the process that has been timed; all arguments
+  #'   will be displayed in the order entered using [cat3()].
   #' @param sound BINARY: Should a sound be played upon completion? Requires
   #'    `beepr`.
   #'
@@ -58,7 +59,7 @@ end_timer <- function(startTime, name = "", sound = TRUE){
 
   # Code -----------------------------------------------------------------------
   timeTaken <- proc.time() - startTime
-  cat("\n", name, "done. It took: \n")
+  cat3(..., "done! It took: ")
   print(timeTaken)
   print_line()
   if (isTRUE(sound)) {
