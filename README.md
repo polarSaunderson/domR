@@ -11,6 +11,13 @@ The public version of this repo can be accessed at:
   https://github.com/polarSaunderson/domR
 
 ## To-Do
+### 2023-09-04
+- [ ] Figure out lists and saving data in relation to version control 
+- [ ] Unify the 'cat' functions - it should handle if a vector goes to cat_list,
+      or a list goes to cat2. But bring these together, so there isn't a wrong 
+      function to go to. Probably keep a cat_list / cat2 combined, and then also
+      a cat4 with the location & traceback part. cat3... hmmmm.
+
 ### 2023-09-03
 - [ ] In `which_line()`, figure out identity within chunk of existing notebook
 - [ ] Rename `cat` functions? Currently, they are:
