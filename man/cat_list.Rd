@@ -4,7 +4,14 @@
 \alias{cat_list}
 \title{Print out a list in a slightly prettier way (in my opinion!)}
 \usage{
-cat_list(list, name = NULL, listDepth = 0, nameLength = 1, maxDepth = 1)
+cat_list(
+  list,
+  name = NULL,
+  listDepth = 0,
+  nameLength = 1,
+  maxDepth = 1,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{list}{The list to be printed out.}
@@ -20,6 +27,9 @@ subsequent depth is marked by an extra "O" at the start of the line.}
 \item{nameLength}{Used for recursion to help things align.}
 
 \item{maxDepth}{Used for recursion to help things align.}
+
+\item{verbose}{If TRUE (the default), data is shown in full; if FALSE, the
+dimensions of each item in the list are shown.}
 }
 \description{
 Printing a list doesn't look great, and \code{cat()} doesn't work.

@@ -1,7 +1,9 @@
-cat_list <- function(list, name = NULL,
+cat_list <- function(list,
+                     name = NULL,
                      listDepth = 0,
                      nameLength = 1,
-                     maxDepth = 1) {
+                     maxDepth = 1,
+                     verbose = TRUE) {
   #' Print out a list in a slightly prettier way (in my opinion!)
   #'
   #' @description Printing a list doesn't look great, and `cat()` doesn't work.
@@ -18,6 +20,8 @@ cat_list <- function(list, name = NULL,
   #'   subsequent depth is marked by an extra "O" at the start of the line.
   #' @param nameLength Used for recursion to help things align.
   #' @param maxDepth Used for recursion to help things align.
+  #' @param verbose If TRUE (the default), data is shown in full; if FALSE, the
+  #'   dimensions of each item in the list are shown.
   #'
   #' @export
 
@@ -31,6 +35,8 @@ cat_list <- function(list, name = NULL,
       name <- deparse(substitute(list))
       list <- as.list(list)
     } else {
+      name <- set_if_null(name, deparse(substitute(list)))
+      cat2(list, name = name)
       stop("Please enter a list, data.frame or environment!")
     }
   } else {
@@ -104,16 +110,33 @@ cat_list <- function(list, name = NULL,
       # Print out the items!
       if ("matrix" %in% iiType) {
         cat(intoBit)
-        cat(iiName, " ||  Matrix: \n")
-        cat(strrep(".", (nameLength + 9 + max(maxDepth, 5) + 5)),   # underline
-            "\n", sep = "")
-        print(iiData)
+        if (isTRUE(verbose)) {
+          cat(iiName, " ||  Matrix: \n")
+          cat(strrep(".", (nameLength + 9 + max(maxDepth, 5) + 5)),   # underline
+              "\n", sep = "")
+          print(iiData)
+        } else {
+          cat(iiName, " ||  Matrix with",
+              nrow(iiData), "rows and",
+              ncol(iiData), "columns \n")
+        }
       } else if ("list" %in% iiType) {
         cat_list(list = iiData, name = iiName, listDepth = listDepth,
-                 maxDepth = maxDepth, nameLength = nameLength) # recursive call
+                 maxDepth = maxDepth, nameLength = nameLength, # recursive call
+                 verbose = verbose)
         cat("\n")
       }  else if ("vector" %in% iiType) {
         cat(intoBit)
+        if (isFALSE(verbose)) {
+          if ("logical" %in% iiType) {
+            iiData <- paste("LOGICAL vector of length:", length(iiData))
+          } else if ("POSIXct" %in% iiType | "POSIXt" %in% iiType) {
+            # This doesn't work properly, it's not identified as POSIX.
+            iiData <- paste("POSIX vector of length:", length(iiData))
+          } else {
+            iiData <- paste("vector of length:", length(iiData))
+          }
+        }
         cat(iiName, " || ", iiData, "\n")
       } else if ("NULL" %in% iiType) {
         cat(intoBit)
