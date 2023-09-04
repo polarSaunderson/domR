@@ -20,7 +20,8 @@ In future, more options may be added if that makes sense.}
 params and file code? Include as '"name" =  value'.}
 
 \item{incGit}{BINARY: Should the full output from \code{\link[=get_latest_git]{get_latest_git()}} be
-included? Even if FALSE, the hash of the last commit is still included.}
+included? Even if FALSE, the hash of the last commit is still included in
+the file code.}
 
 \item{incSession}{BINARY: Should the output from \code{\link[=sessionInfo]{sessionInfo()}} be
 included? This is currently not implemented as it looks more complex than

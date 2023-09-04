@@ -4,28 +4,29 @@
 \alias{get_metadata}
 \title{Prepare metadata about a file}
 \usage{
-get_metadata(format = "named", ..., incGit = TRUE, incSession = TRUE)
+get_metadata(..., format = "list", incGit = TRUE, incSession = TRUE)
 }
 \arguments{
-\item{format}{Which format do you want the metadata in? Options are "pdf",
-"NetCDF", "print", "yaml" or "json" or "list" (all the same), or "named".
-"named" is the default and the fallback if anything except one of these
-strings is entered (cASe inSENSItIve).
+\item{...}{Any additional information that needs to be included beyond the
+params and file code? Include as '"name" =  value'.}
 
-Options (examples of formatting):
+\item{format}{Which format do you want the metadata in? Options are "pdf",
+"NetCDF", "print", "named", or "yaml" / "json" / "list" (all the same).
+"list" is the default and the fallback if anything except one of these
+strings is entered.
+
+Options (examples of formatting); names are cASe inSENSItIve.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{ "pdf"                      "-Keywords=month:Dec"
  "NetCDF"                   "month=Dec"
  "print"                    "month : Dec"
+ "named"                    named vector: "month" = "Dec"
  "yaml" / "json" / "list"   list("month" = "Dec")
- "named"                    "month" = "Dec"
 }\if{html}{\out{</div>}}}
 
-\item{...}{Any additional information that needs to be included beyond the
-params and file code? Include as '"name" =  value'.}
-
 \item{incGit}{BINARY: Should the full output from \code{\link[=get_latest_git]{get_latest_git()}} be
-included? Even if FALSE, the hash of the last commit is still included.}
+included? Even if FALSE, the hash of the last commit is still included in
+the file code.}
 
 \item{incSession}{BINARY: Should the output from \code{\link[=sessionInfo]{sessionInfo()}} be
 included? This is currently not implemented as it looks more complex than
