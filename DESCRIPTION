@@ -19,4 +19,5 @@ Imports:
 Suggests:
     git2r,
     beepr,
-    rstudioapi
+    rstudioapi,
+    jsonlite

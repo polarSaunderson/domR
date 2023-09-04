@@ -1,4 +1,4 @@
-display_latest_git <- function(display = TRUE) {
+get_latest_git <- function(display = TRUE, incGitCommit = FALSE) {
   #' Print the information of the latest git commit
   #'
   #' @description When we use quarto notebooks, and render them to a pdf, we
@@ -12,17 +12,24 @@ display_latest_git <- function(display = TRUE) {
   #'   whole purpose of the function, but sometimes the output should be
   #'   suppressed, for example if adding the information to a list of data that
   #'   will then be saved in the "Data/" folder.
+  #' @param incGitCommit BINARY: Should the "gitcommit" object be returned? Most
+  #'   of the data has already been "repurposed" so this is usually unnecessary,
+  #'   plus some functions do not know how to handle a "gitcommit" object. It is
+  #'   therefore FALSE by default. Set to TRUE if you really want it.
   #'
   #' @export
 
   # Code -----------------------------------------------------------------------
-  gitCommit <- (git2r::commits(getwd())[[1]])
+  # Get the last commit on the *current* branch
+  gitCommit <- git2r::last_commit()
+
   # Display / print git info
   if (isTRUE(display)) {
     cat("Latest git commit:")
     cat("\n     Commit : ", gitCommit$sha,
-        "\n     Author : ", gitCommit$author[[1]],
+        "\n     Author : ", gitCommit$author$name,
         "\n     Date   : ", git2r::when(gitCommit),
+        "\n     Repo   : ", gitCommit$repo[[1]],
         "\n     Message: ", gitCommit$message)
     print_line()
   }
@@ -31,8 +38,13 @@ display_latest_git <- function(display = TRUE) {
   info <- list("Commit:"  = gitCommit$sha,
                "Author:"  = gitCommit$author[[1]],
                "Date:"    = git2r::when(gitCommit),
-               "Message:" = gitCommit$message,
-               "git:"     = gitCommit)
+               "Repo:"    = gitCommit$repo[[1]],
+               "Message:" = gitCommit$message)
+
+  # Should the "gitcommit" be returned?
+  if (isTRUE(incGitCommit)) {
+    info[["git:"]] <- gitCommit
+  }
 
   return(invisible(info))
 }

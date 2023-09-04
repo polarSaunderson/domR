@@ -15,13 +15,10 @@ save_list <- function(x, filename) {
   # Code -----------------------------------------------------------------------
   # Figure out extension to determine progress
   ext <- get_extension(filename)
-  # ext <- strsplit(filename, split = ".", fixed = TRUE)[[1]] |>
-    # (function(x) x[length(x)]) ()
 
   if (tolower(ext) == "json") {
     jsonlite::write_json(x = x, path = filename,
-                         pretty = TRUE, dataframe = "columns",
-                         )
+                         pretty = TRUE, dataframe = "columns")
   } else {
     stop("Currently only works for saving R lists as json files!")
   }
