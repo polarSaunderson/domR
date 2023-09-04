@@ -7,10 +7,10 @@
 start_timer()
 }
 \description{
-This function and \code{end_timer()} are mainly because I can never
-remember the syntax/name of \code{proc.time()}. Simply call \code{start_timer()}
-before the process you are timing begins, and then call \code{end_timer()}
-afterwards, feeding it with the output of \code{start_timer()}.
+This function and \code{\link[=end_timer]{end_timer()}} are mainly because I can never
+remember the syntax/name of \code{\link[=proc.time]{proc.time()}}. Simply call \code{\link[=start_timer]{start_timer()}}
+before the process you are timing begins, and then call \code{\link[=end_timer]{end_timer()}}
+afterwards, feeding it with the output of \code{\link[=start_timer]{start_timer()}}.
 }
 \examples{
 \dontrun{

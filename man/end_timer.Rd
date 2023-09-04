@@ -7,7 +7,7 @@
 end_timer(startTime, name = "", sound = TRUE)
 }
 \arguments{
-\item{startTime}{Use the output from \code{start_timer()} as input here}
+\item{startTime}{Use the output from \code{\link[=start_timer]{start_timer()}} as input here}
 
 \item{name}{"string": Name of the process that has been timed}
 
@@ -15,12 +15,12 @@ end_timer(startTime, name = "", sound = TRUE)
 \code{beepr}.}
 }
 \description{
-This function and \code{start_timer()} are mainly because I can
-never remember the syntax/name of \code{proc.time()}. Simply call
-\code{start_timer()} before the process you are timing begins, and then call
-\code{end_timer()} afterwards, feeding it with the output of \code{start_timer()}.
+This function and \code{\link[=start_timer]{start_timer()}} are mainly because I can
+never remember the syntax/name of \code{\link[=proc.time]{proc.time()}}. Simply call
+\code{\link[=start_timer]{start_timer()}} before the process you are timing begins, and then call
+\code{\link[=end_timer]{end_timer()}} afterwards, feeding it with the output of \code{\link[=start_timer]{start_timer()}}.
 This function invisibly returns the time of it finishing, so it can be
-used in a subsequent \code{end_timer()} function call and the timing of
+used in a subsequent \code{\link[=end_timer]{end_timer()}} function call and the timing of
 processes can be chained together. See the usage examples.
 }
 \examples{
