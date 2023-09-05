@@ -12,7 +12,8 @@ get_packages <- function(seshInfo,
   #'   (e.g. `"packages_attached" = get_packages(seshInfo, "attached")`). The
   #'   options are "base" packages, "attached" packages or  packages in the
   #'   "namespace" but not attached (i.e. those called as
-  #'   `domR::made_up_function()`).
+  #'   `domR::made_up_function()`). It can also be used to retrieve the
+  #'   "locale" part of the [sessionInfo()] output.
   #'
   #'   **NOTE!** This very much relies on the [sessionInfo()] output remaining
   #'   in the same formatting as it has now! It has not been extensively test
@@ -23,7 +24,8 @@ get_packages <- function(seshInfo,
   #'   and "attached"), it is better to run `seshInfo <- sessionInfo()`  first
   #'   (before calling this function), and use that as input here.
   #' @param whichPackages Options are "base", "attached", or "namespace". Can be
-  #'   input as "b", "a", or "n".
+  #'   input as "b", "a", or "n". Will also work for "locale" (or "l") even
+  #'   though those are not packages.
   #' @param collapse "string": All package names in a call are returned in a
   #'   single vector. This argument determines how the package names should be
   #'   separated in the vector. The default is " ; ", so the output looks like
@@ -39,19 +41,23 @@ get_packages <- function(seshInfo,
   seshInfo <- capture.output(seshInfo)
 
   # Find lines that the packages are on
-  lineAttachedBase <- which(grepl("attached base packages:", seshInfo))
-  lineAttached     <- which(grepl("other attached packages:", seshInfo))
-  lineLoadedNames  <- which(grepl("loaded via a namespace", seshInfo))
+  lineLocale     <- which(grepl("locale:", seshInfo))
+  lineBase       <- which(grepl("attached base packages:", seshInfo))
+  lineAttached   <- which(grepl("other attached packages:", seshInfo))
+  lineNamespace  <- which(grepl("loaded via a namespace", seshInfo))
 
   whichPackages <- tolower(whichPackages)
-  if (whichPackages %in% c("base", "b")) {
-    packageLines <- seshInfo[(lineAttachedBase + 1):(lineAttached - 2)]
+  if (whichPackages %in% c("locale", "l")) {
+    packageLines <- seshInfo[(lineLocale + 1):(lineBase - 2)]
+  } else if (whichPackages %in% c("base", "b")) {
+    packageLines <- seshInfo[(lineBase + 1):(lineAttached - 2)]
   } else if (whichPackages %in% c("attached", "a")) {
-    packageLines <- seshInfo[(lineAttached + 1):(lineLoadedNames - 2)]
+    packageLines <- seshInfo[(lineAttached + 1):(lineNamespace - 2)]
   } else if (whichPackages %in% c("namespace", "n")) {
-    packageLines <- seshInfo[(lineLoadedNames + 1):length(seshInfo)]
+    packageLines <- seshInfo[(lineNamespace + 1):length(seshInfo)]
   } else {
-    stop("Select either 'base', 'namespace' or 'attached' in get_packages()")
+    stop("Select either 'base', 'namespace', 'attached' or 'locale'",
+         "in get_packages()")
   }
 
   # Format down nicely

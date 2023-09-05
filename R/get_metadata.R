@@ -6,12 +6,12 @@ get_metadata <- function(...,
   #'
   #' @description Get the information necessary for documenting how a file /
   #'   dataset was created. It includes a time and date for when it was called,
-  #'   the filecode (see [get_file_codes()]) of  the file it was called from;
-  #'   any 'params' if called from a .qmd file, and (optionaly) information on
-  #'   the last git commit (requires [git2r](https://docs.ropensci.org/git2r/)),
-  #'   the output from [sessionInfo()], and any additional information that is
-  #'   entered as named arguments (e.g. '"extraMetadata" = "useful
-  #'   information"').
+  #'   the filecode (see [domR::get_file_codes()]) of  the file it was called f
+  #'   rom; any 'params' if called from a .qmd file, and (optionally)
+  #'   information on the last git commit (requires
+  #'   [git2r](https://docs.ropensci.org/git2r/)); the output from
+  #'   [sessionInfo()]; and any additional information that is entered as named
+  #'   arguments (e.g. '"extraMetadata" = "useful information"').
   #'
   #' @param ... Any additional information that needs to be included beyond the
   #'   params and file code? Include as '"name" =  value'.
@@ -27,28 +27,29 @@ get_metadata <- function(...,
   #'      "print"                    "month : Dec"
   #'      "named"                    named vector: "month" = "Dec"
   #'      "yaml" / "json" / "list"   list("month" = "Dec")
-  #' @param incGit BINARY: Should the full output from [get_latest_git()] be
-  #'   included? Even if FALSE, the hash of the last commit is still included in
-  #'   the file code.
+  #' @param incGit BINARY: Should the full output from [domR::get_latest_git()]
+  #'   be included? Even if FALSE, the hash of the last commit is still included
+  #'   in the file code. Only works if `git2r` is installed.
   #' @param incSession BINARY: Should the output from [sessionInfo()] be
-  #'   included? This is currently not implemented as it looks more complex than
-  #'   I had anticipated.
+  #'   included? This is formatted and simplified, and includes only the bits
+  #'   that I think are interesting to keep. Uses the [domR::get_sessionInfo()]
+  #'   function.
   #'
   #' @export
 
   # Code -----------------------------------------------------------------------
   # Preallocate
-  metadata     <- paste0("MetadateCreation=", now("n"))
+  metadata     <- paste0("MetadateCreation<-<-<=>->->", now("n"))
 
   # Current file code (of the file that get_metadata was initially called from)
-  fileCodes    <- paste0("fileCode=", get_file_codes(!incGit))
+  fileCodes    <- paste0("fileCode<-<-<=>->->", get_file_codes())
   metadata     <- c(metadata, fileCodes)
 
   # Params from the .qmd
   if (exists("params")) {
     paramNames  <- paste0("params_", names(params))
     paramValues <- params
-    paramPairs  <- paste(paramNames, paramValues, sep = "+<=>+")
+    paramPairs  <- paste(paramNames, paramValues, sep = "<-<-<=>->->")
     metadata <- c(metadata, paramPairs)
   }
 
@@ -58,7 +59,7 @@ get_metadata <- function(...,
     gitNames  <- gsub(pattern = ":", replacement = "", x = names(git))
     gitNames  <- paste0("git_", gitNames)
     gitValues <- git # |> unlist() |> unname()
-    gitPairs  <- paste(gitNames, gitValues, sep = "+<=>+")
+    gitPairs  <- paste(gitNames, gitValues, sep = "<-<-<=>->->")
     metadata <- c(metadata, gitPairs)
   }
 
@@ -66,29 +67,30 @@ get_metadata <- function(...,
   dots        <- list(...)
   if (length(dots) > 0) {
     dotNames  <- names(dots)
-    dotValues <- dots |> unlist() |> unname()
-    dotPairs  <- paste(dotNames, dotValues, sep = "+<=>+")
+    dotValues <- dots #|> unlist() |> unname()
+    dotPairs  <- paste(dotNames, dotValues, sep = "<-<-<=>->->")
     metadata <- c(metadata, dotPairs)  # Combine
   }
 
-
   # Add sessionInfo?
   if (isTRUE(incSession)) {
-
-    # sesh     <- sessionInfo() # |> capture.output()
+    seshData   <- get_sessionInfo()
+    seshNames  <- names(seshData)
+    seshPairs  <- paste(seshNames, seshData, sep = "<-<-<=>->->")
+    metadata  <- c(metadata, seshPairs)
   }
 
   # Format ---------------------------------------------------------------------
   if (tolower(format) == "pdf") {
-    metadata <- gsub(pattern = "+<=>+", replacement = ":", x = metadata)
+    metadata <- gsub(pattern = "<-<-<=>->->", replacement = ":", x = metadata)
     metadata <- paste0("-Keywords=", metadata)
   } else if (tolower(format) %in% c("netcdf", "nc")) {
     metadata <- metadata
   } else if (tolower(format) == "print") {
-    metadata <- gsub(pattern = "+<=>+", replacement = " : ", x = metadata)
+    metadata <- gsub(pattern = "<-<-<=>->->", replacement = " : ", x = metadata)
   } else {
-    namesBit <- strsplit(metadata, "+<=>+") |> lapply('[[', 1) |> unlist()
-    valueBit <- strsplit(metadata, "+<=>+") |> lapply('[[', 2) |> unlist()
+    namesBit <- strsplit(metadata, "<-<-<=>->->") |> lapply('[[', 1) |> unlist()
+    valueBit <- strsplit(metadata, "<-<-<=>->->") |> lapply('[[', 2) |> unlist()
     metadata <- valueBit |> `names<-`(namesBit)
     if (tolower(format) == "named") {
       return(metadata)

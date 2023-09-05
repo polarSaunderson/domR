@@ -19,13 +19,14 @@ In future, more options may be added if that makes sense.}
 \item{...}{Any additional information that needs to be included beyond the
 params and file code? Include as '"name" =  value'.}
 
-\item{incGit}{BINARY: Should the full output from \code{\link[=get_latest_git]{get_latest_git()}} be
-included? Even if FALSE, the hash of the last commit is still included in
-the file code.}
+\item{incGit}{BINARY: Should the full output from \code{\link[=get_latest_git]{get_latest_git()}}
+be included? Even if FALSE, the hash of the last commit is still included
+in the file code. Only works if \code{git2r} is installed.}
 
 \item{incSession}{BINARY: Should the output from \code{\link[=sessionInfo]{sessionInfo()}} be
-included? This is currently not implemented as it looks more complex than
-I had anticipated.}
+included? This is formatted and simplified, and includes only the bits
+that I think are interesting to keep. Uses the \code{\link[=get_sessionInfo]{get_sessionInfo()}}
+function.}
 
 \item{exifPath}{The file path to the ExifTools executable.}
 }
