@@ -8,7 +8,24 @@ print_line(lineType = "=", nStart = 1, nEnd = 1, width = 22)
 }
 \arguments{
 \item{lineType}{"string": The symbol/s that will be printed to create a
-line across the console.}
+line across the console. A numeric value between 1 and 9 can be used,
+with the following defined:
+
+Numeric Options
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    1      ---------------- 1
+    2      ================ 2
+    3      ________________ 3
+    4      ~~~~~~~~~~~~~~~~ 4
+    5      ++++++++++++++++ 5
+    6      >>>>>>>>>>>>>>>> 6
+    7      <<<<<<<<<<<<<<<< 7
+    8      |||||||||||||||| 8
+    9      !!!!!!!!!!!!!!!! 9
+}\if{html}{\out{</div>}}
+
+All other numbers will default to "-" (equivalent to 1). To use a line of
+the number itself, enclose it as a string: "1". See example.}
 
 \item{nStart}{numeric: How many \verb{\\n} should be included \emph{before} the line?}
 
@@ -23,6 +40,9 @@ particularly helpful to group output to the console or when testing.
 }
 \examples{
   print_line()
+  print_line(1)
+  print_line("1")
+  print_line(2)
   print_line("=", 1, 0)
   print_line("-", width = 10)
   print_line("+-", width = 25)
