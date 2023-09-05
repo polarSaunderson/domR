@@ -34,6 +34,11 @@ I had anticipated.}
 }
 \description{
 Get the information necessary for documenting how a file /
-dataset was created from a .qmd notebook. It only works within a .qmd
-notebook as it directly looks for the 'params' defined at the top.
+dataset was created. It includes a time and date for when it was called,
+the filecode (see \code{\link[=get_file_codes]{get_file_codes()}}) of  the file it was called from;
+any 'params' if called from a .qmd file, and (optionaly) information on
+the last git commit (requires \href{https://docs.ropensci.org/git2r/}{git2r}),
+the output from \code{\link[=sessionInfo]{sessionInfo()}}, and any additional information that is
+entered as named arguments (e.g. '"extraMetadata" = "useful
+information"').
 }
