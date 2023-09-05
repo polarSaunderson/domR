@@ -13,7 +13,7 @@ print_on_saving <- function(fileName = "") {
 
   # Code -----------------------------------------------------------------------
   print_line()
-  cat(get_current_file_codes(),"\n",
+  cat(get_file_codes(),"\n",
       "   Successfully saved to file! \n",
       "->", fileName)
   print_line()
