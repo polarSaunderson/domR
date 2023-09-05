@@ -25,8 +25,9 @@ print_line <- function(lineType = "=", nStart = 1, nEnd = 1, width = 22){
   #'   the number itself, enclose it as a string: "1". See example.
   #' @param nStart numeric: How many `\n` should be included *before* the line?
   #' @param nEnd numeric: How many `\n` should be included *after* the line?
-  #' @param width numeric: How many times should the above be repeated? Usually
-  #'   unnecessary, but change it if screen is particularly wide or narrow.
+  #' @param width numeric: How many times should the 'lineType' be repeated?
+  #'   Usually unnecessary, but change it if screen is particularly wide or
+  #'   narrow.
   #'
   #' @examples
   #'   print_line()
@@ -34,8 +35,9 @@ print_line <- function(lineType = "=", nStart = 1, nEnd = 1, width = 22){
   #'   print_line("1")
   #'   print_line(2)
   #'   print_line("=", 1, 0)
-  #'   print_line("-", width = 10)
-  #'   print_line("+-", width = 25)
+  #'   print_line("-", width = 25)
+  #'   print_line("?", width = 10)
+  #'   print_line("+-", width = 10)
   #'
   #' @export
 

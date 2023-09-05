@@ -31,8 +31,9 @@ the number itself, enclose it as a string: "1". See example.}
 
 \item{nEnd}{numeric: How many \verb{\\n} should be included \emph{after} the line?}
 
-\item{width}{numeric: How many times should the above be repeated? Usually
-unnecessary, but change it if screen is particularly wide or narrow.}
+\item{width}{numeric: How many times should the 'lineType' be repeated?
+Usually unnecessary, but change it if screen is particularly wide or
+narrow.}
 }
 \description{
 Useful when working interactively in RStudio, and can be
@@ -44,7 +45,8 @@ particularly helpful to group output to the console or when testing.
   print_line("1")
   print_line(2)
   print_line("=", 1, 0)
-  print_line("-", width = 10)
-  print_line("+-", width = 25)
+  print_line("-", width = 25)
+  print_line("?", width = 10)
+  print_line("+-", width = 10)
 
 }
