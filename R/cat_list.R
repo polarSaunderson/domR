@@ -34,6 +34,9 @@ cat_list <- function(list,
            # "  An error with deparse(substitute())?")
       name <- deparse(substitute(list))
       list <- as.list(list)
+    } else if ("knit_param_list" %in% listType) {
+      name <- "knit_param_list"
+      attr(list, "class") <- NULL
     } else {
       name <- set_if_null(name, deparse(substitute(list)))
       cat2(list, name = name)

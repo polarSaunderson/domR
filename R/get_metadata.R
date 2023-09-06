@@ -85,7 +85,7 @@ get_metadata <- function(...,
     metadata <- gsub(pattern = "<-<-<=>->->", replacement = ":", x = metadata)
     metadata <- paste0("-Keywords=", metadata)
   } else if (tolower(format) %in% c("netcdf", "nc")) {
-    metadata <- metadata
+    metadata <- gsub(pattern = "<-<-<=>->->", replacement = "=", x = metadata)
   } else if (tolower(format) == "print") {
     metadata <- gsub(pattern = "<-<-<=>->->", replacement = " : ", x = metadata)
   } else {

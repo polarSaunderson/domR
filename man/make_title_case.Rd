@@ -7,7 +7,7 @@
 make_title_case(x)
 }
 \arguments{
-\item{x}{"string": The string to turn into title case.}
+\item{x}{"string": The string to turn into title case. Can be a vector.}
 }
 \description{
 If a string arrives as "hello uSEr" or "HELLO user", etc, this

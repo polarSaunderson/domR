@@ -19,6 +19,7 @@ save_list <- function(x, filename) {
   if (tolower(ext) == "json") {
     jsonlite::write_json(x = x, path = filename,
                          pretty = TRUE, dataframe = "columns")
+    print_on_saving(filename = filename)
   } else {
     stop("Currently only works for saving R lists as json files!")
   }

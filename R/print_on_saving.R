@@ -1,4 +1,4 @@
-print_on_saving <- function(fileName = "") {
+print_on_saving <- function(filename = "") {
   #' Let the user know the save didn't throw an error & print relevant info
   #'
   #' @description Just used interactively to verify that something has been
@@ -15,6 +15,6 @@ print_on_saving <- function(fileName = "") {
   print_line()
   cat(get_file_codes(),"\n",
       "   Successfully saved to file! \n",
-      "->", fileName)
+      "->", filename)
   print_line()
 }

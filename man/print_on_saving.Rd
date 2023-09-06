@@ -4,7 +4,7 @@
 \alias{print_on_saving}
 \title{Let the user know the save didn't throw an error & print relevant info}
 \usage{
-print_on_saving(fileName = "")
+print_on_saving(filename = "")
 }
 \arguments{
 \item{fileName}{"string": Where should it have been saved?}
