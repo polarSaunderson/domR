@@ -53,6 +53,15 @@ get_metadata <- function(...,
     metadata <- c(metadata, paramPairs)
   }
 
+  # Anything else?
+  dots        <- list(...)
+  if (length(dots) > 0) {
+    dotNames  <- names(dots)
+    dotValues <- dots #|> unlist() |> unname()
+    dotPairs  <- paste(dotNames, dotValues, sep = "<-<-<=>->->")
+    metadata <- c(metadata, dotPairs)  # Combine
+  }
+
   # Add git?
   if (isTRUE(incGit)) {
     git       <- get_latest_git(FALSE, FALSE)
@@ -61,15 +70,6 @@ get_metadata <- function(...,
     gitValues <- git # |> unlist() |> unname()
     gitPairs  <- paste(gitNames, gitValues, sep = "<-<-<=>->->")
     metadata <- c(metadata, gitPairs)
-  }
-
-  # Anything else?
-  dots        <- list(...)
-  if (length(dots) > 0) {
-    dotNames  <- names(dots)
-    dotValues <- dots #|> unlist() |> unname()
-    dotPairs  <- paste(dotNames, dotValues, sep = "<-<-<=>->->")
-    metadata <- c(metadata, dotPairs)  # Combine
   }
 
   # Add sessionInfo?
