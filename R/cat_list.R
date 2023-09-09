@@ -3,7 +3,8 @@ cat_list <- function(list,
                      listDepth = 0,
                      nameLength = 1,
                      maxDepth = 1,
-                     verbose = TRUE) {
+                     verbose = TRUE,
+                     show = TRUE) {
   #' Print out a list in a slightly prettier way (in my opinion!)
   #'
   #' @description Printing a list doesn't look great, and `cat()` doesn't work.
@@ -22,6 +23,12 @@ cat_list <- function(list,
   #' @param maxDepth Used for recursion to help things align.
   #' @param verbose If TRUE (the default), data is shown in full; if FALSE, the
   #'   dimensions of each item in the list are shown.
+  #' @param show LOGICAL: If FALSE, the function does nothing; it is useful if
+  #'   there are multiple `cat_list()` calls throughout; set a variable at the
+  #'   beginning and use that as the 'show' argument in each `cat_list()` call.
+  #'   Simply changing that to FALSE allows the function to be run without all
+  #'   the calls, but the calls can remain in place if further `cat_list()` use
+  #'   is likely.
   #'
   #' @export
 
@@ -126,7 +133,7 @@ cat_list <- function(list,
       } else if ("list" %in% iiType) {
         cat_list(list = iiData, name = iiName, listDepth = listDepth,
                  maxDepth = maxDepth, nameLength = nameLength, # recursive call
-                 verbose = verbose)
+                 verbose = verbose, show = show)
         cat("\n")
       }  else if ("vector" %in% iiType) {
         cat(intoBit)

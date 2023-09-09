@@ -31,13 +31,16 @@ cat2 <- function(x, show = TRUE, name = NULL) {
     }
 
     # Prep data
-    x <- unlist(x)                 # cat doesn't work with lists
-    if (length(x) > 1) {
-      x[is.null(x)] <- "NULL"      # let us know if it is NULL
-    }
+    if (is.list(x)) {
+      cat_list(x, name = name)
+    } else {
+      if (length(x) > 1) {
+        x[is.null(x)] <- "NULL"      # let us know if it is NULL
+      }
 
-    # Display
-    cat(paste0("\n", name, " :"), x, "\n")
+      # Display
+      cat(paste0("\n", name, " :"), x, "\n")
+    }
   }
 }
 
@@ -45,12 +48,14 @@ cat3 <- function(..., show = TRUE) {
   #' Concatenate a variable
   #'
   #' @description This function is simply `cat()` but adds a newline `\n` before
-  #'   and after to quicken things up.
+  #'   and after to quicken things up. It is not exactly the same output format,
+  #'   and still in progress.
   #'
   #' @param ... The variable/s that should be displayed. The values will be
   #'   collapsed down with a space between them and then shown using `cat()`.
   #'   Not tested with complex data types - use with caution! If you want the
-  #'   name of the variable and the variable, use `cat2()`.
+  #'   name of the variable and the variable, use `cat2()`; if location,
+  #'   `cat4()`.
   #' @param show logical If FALSE, the function does nothing; it is useful if
   #'   there are multiple `cat3()` calls throughout; set a variable at the
   #'   beginning and use that as the 'show' argument in each `cat3()` call.
@@ -84,7 +89,12 @@ cat4 <- function(x, show = TRUE, skipCatCall = TRUE) {
   # Code -----------------------------------------------------------------------
   if (isTRUE(show)) {
     print_line("-", 1, 0)
-    cat2(x, show = show, name = deparse(substitute(x)))
-    which_line(skipCatCall = skipCatCall)
+    xName <- deparse(substitute(x))
+    if (is.list(x)) {
+      cat_list(x, show = show, name = xName)
+    } else {
+      cat2(x, show = show, name = xName)
+    }
+    which_line(skipCatCall = TRUE)
   }
 }
