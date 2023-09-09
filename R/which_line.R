@@ -33,6 +33,9 @@ which_line <- function(skipCatCall = TRUE) {
   #' @export
 
   # Code -----------------------------------------------------------------------
+  # for debugging
+  showCat <- FALSE
+
   # Get some information about the last calls
   if (isTRUE(skipCatCall)) {
     functionList <- .traceback(2)
@@ -78,59 +81,86 @@ which_line <- function(skipCatCall = TRUE) {
   # I haven't figured out a way to identify the chunk yet.
 
   # Tracking which call to the function it is
-  if (!exists("whichLine_info")) {
-    cat3(show = FALSE, "\ncreating new info")
-    .GlobalEnv$whichLine_info <- list()
-  } else { cat3(show = FALSE, "whichLine_info already exists") }
+  # if (!exists("whichLine_info")) {
+  if (!exists("whichEnv", where = globalenv())) {
+    cat3(show = showCat, "\nCreating new environment: whichEnv.")
+    whichEnv <- new.env()
+    assign("whichEnv", whichEnv, envir = globalenv())
+    whichEnv$line_info <- list()
+  # } else { cat3(show = FALSE, "whichLine_info already exists") }
+  } else { cat3(show = showCat, "The whichEnv environment already exists!") }
 
   # Tracking the file & function
   # We track file, though I can't remember the use case that made me do it.
   # As far as I can tell, it will always go to the same file, where we initially
   # ran it from - everything else is a function call, and I don't think it works
   # with `source()`.
-  if (fileName %in% names(.GlobalEnv$whichLine_info)) {
-    cat3(show = FALSE, "file already being tracked")
-    cat2(show = FALSE, names(.GlobalEnv$whichLine_info[[fileName]]))
+  if (fileName %in% names(whichEnv$line_info)) {
+    cat3(show = showCat, "'", fileName,
+         "' (filename) is already being tracked in whichEnv.")
 
-    if (functionName %in% names(.GlobalEnv$whichLine_info[[fileName]])) {
-      cat3(show = FALSE, "function already being tracked, adding 1")
-      .GlobalEnv$whichLine_info[[fileName]][[functionName]] <- .GlobalEnv$whichLine_info[[fileName]][[functionName]] + 1
+    if (functionName %in% names(whichEnv$line_info[[fileName]])) {
+      cat3(show = showCat, "'", functionName,
+           "' (function) is already being tracked; adding 1 to the counter.")
+      whichEnv$line_info[[fileName]][[functionName]] <- whichEnv$line_info[[fileName]][[functionName]] + 1
     } else {
-      cat3(show = FALSE, "function not being tracked, creating 1")
-      .GlobalEnv$whichLine_info[[fileName]][[functionName]] <- 1
+      cat3(show = showCat, "'", functionName,
+           "' (function) is not being tracked; creating a counter.")
+      whichEnv$line_info[[fileName]][[functionName]] <- 1
     }
   } else {
-    cat3(show = FALSE, "file not being tracked yet, creating it, & function, and adding 1")
-    .GlobalEnv$whichLine_info[[fileName]][[functionName]] <- 1
+    cat3(show = showCat, "'", fileName,
+         "' (filename) not being tracked yet; creating a counter.")
+    whichEnv$line_info[[fileName]][[functionName]] <- 1
   }
 
   # Get the index - this is the whole point!
-  fileLineIndex <- .GlobalEnv$whichLine_info[[fileName]][[functionName]]
+  fileLineIndex <- whichEnv$line_info[[fileName]][[functionName]]
 
   # Tidy up .GlobalEnv
   ## 1) check if the function has been finished with
-  if (.GlobalEnv$whichLine_info[[fileName]][[functionName]] == length(fileLines)) {
-    # cat_list(.GlobalEnv$whichLine_info)
-    cat3(show = FALSE, "going to NULL function tracking")
-    .GlobalEnv$whichLine_info[[fileName]][[functionName]] <- NULL
-    cat3(show = FALSE, "nulled function tracking")
-    # cat_list(.GlobalEnv$whichLine_info)
+  if (whichEnv$line_info[[fileName]][[functionName]] == length(fileLines)) {
+    # cat_list(whichEnv$line_info)
+    cat3(show = showCat, "'", functionName,
+         "' (function) finished with; NULLing function counter...")
+    whichEnv$line_info[[fileName]][[functionName]] <- NULL
+    cat3(show = showCat, "'", functionName,
+         "' (function) counter NULLED.")
+    # cat_list(whichEnv$line_info)
+  } else {
+    cat3(show = showCat, "'", functionName,
+         "' (function) still active.")
   }
 
   ## 2) check if the file has been finished with
-  if (length(.GlobalEnv$whichLine_info[[fileName]]) == 0) {
-    cat3(show = FALSE, "going to NULL file tracking")
-    .GlobalEnv$whichLine_info[[fileName]] <- NULL
-    cat3(show = FALSE, "nulled file tracking")
+  if (length(whichEnv$line_info[[fileName]]) == 0) {
+    cat3(show = showCat, "'", fileName,
+         "' (filename) finished with; NULLing file counter...")
+    whichEnv$line_info[[fileName]] <- NULL
+    cat3(show = showCat, "'", fileName,
+         "' (filename) counter nulled.")
+  } else {
+    cat3(show = showCat, "'", fileName,
+         "' (filename) still active.")
   }
 
   ## 3) check if the tracking has been finished with
-  if (length(.GlobalEnv$whichLine_info) == 0) {
-    cat3(show = FALSE, "removing all tracking")
-    rm(whichLine_info, envir = .GlobalEnv)
+  if (length(whichEnv$line_info) == 0) {
+    cat3(show = showCat,
+         "Finished all tracking, removing whichEnv...")
+    # cat3(show = showCat, "printing .GlobalEnv:")
+    # cat_list(.GlobalEnv)
+    rm(whichEnv, envir = .GlobalEnv)
+    cat3(show = showCat,
+         "whichEnv removed from the global environment!")
+    # cat_list(.GlobalEnv)
+    # cat3(show = showCat, "the above shouldn't have a whichEnv in...")
+  } else {
+    cat3(show = showCat,
+         "whichEnv is still actively tracking function calls")
   }
 
-  # Display file information
+  # Display file information ---------------------------------------------------
   if (length(functionList) == 1) {
     lineBit <- "On line"
   } else {
