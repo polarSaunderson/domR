@@ -12,8 +12,8 @@ get_sessionInfo <- function() {
 
   # Code -----------------------------------------------------------------------
   # Get session info
-  seshInfo     <- sessionInfo()
-  seshCaptured <- capture.output(seshInfo)   # some parts are easier from this
+  seshInfo     <- utils::sessionInfo()
+  seshCaptured <- utils::capture.output(seshInfo)   # some parts are easier from this
 
   # Format it
   sessionList <- list() # preallocate

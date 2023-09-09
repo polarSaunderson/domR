@@ -36,9 +36,9 @@ get_packages <- function(seshInfo,
   # Code -----------------------------------------------------------------------
   # Run session info if necessary
   if (is.null(seshInfo)) {
-    seshInfo <- sessionInfo()
+    seshInfo <- utils::sessionInfo()
   }
-  seshInfo <- capture.output(seshInfo)
+  seshInfo <- utils::capture.output(seshInfo)
 
   # Find lines that the packages are on
   lineLocale     <- which(grepl("locale:", seshInfo))

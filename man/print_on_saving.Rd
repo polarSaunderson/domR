@@ -7,7 +7,7 @@
 print_on_saving(filename = "")
 }
 \arguments{
-\item{fileName}{"string": Where should it have been saved?}
+\item{filename}{"string": Where should it have been saved?}
 }
 \description{
 Just used interactively to verify that something has been

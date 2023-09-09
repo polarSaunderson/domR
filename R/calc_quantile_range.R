@@ -14,7 +14,7 @@ calc_quantile_range <- function(x, lower = 0.1, upper = 0.9, ...) {
   #' @export
 
   # Code -----------------------------------------------------------------------
-  y <- quantile(x, probs = c(lower, upper), ...)
+  y <- stats::quantile(x, probs = c(lower, upper), ...)
   z <- y[2] - y[1]
   names(z) <- paste0(lower*100, "-", upper*100, "%")
   return(z)

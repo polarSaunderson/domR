@@ -32,8 +32,8 @@ make_title_case <- function(x) {
            sep = "")            # join them back together!
 
   # Handle if it was a list
-  if ("list" %in% is(x)) {
-    y <- setNames(as.list(y), names(x))
+  if ("list" %in% methods::is(x)) {
+    y <- stats::setNames(as.list(y), names(x))
   }
 
   return(y)

@@ -7,7 +7,7 @@ print_on_saving <- function(filename = "") {
   #'   actually check anything at all - it just assumes that if it has been
   #'   called, the save went ahead okay.
   #'
-  #' @param fileName "string": Where should it have been saved?
+  #' @param filename "string": Where should it have been saved?
   #'
   #' @export
 
