@@ -12,11 +12,11 @@ should the call to that function (e.g.\code{cat4(x)}) be included in the print
 out of where \code{\link[=which_line]{which_line()}} was called from? TRUE by default.}
 }
 \description{
-This function is not complete, but it is getting somewhere...
+This function is experimental, but is getting somewhere...
 Imagine when debugging, but without actual errors. You're just trying to
-find out the value of a variable at different stages. We want to know
-which line of a file that is on. This is therefore essentially a wrapper
-around using \code{.traceback(x)} when we haven't an actual error to
+find out the value of a variable at different stages. It is necessary to
+know which line of a file that is on. This is therefore essentially a
+wrapper around using \code{.traceback(x)} when we haven't an actual error to
 traceback.
 
 This function is mainly designed to be used inside the \code{\link[=cat4]{cat4()}} function.
@@ -24,15 +24,12 @@ This function is mainly designed to be used inside the \code{\link[=cat4]{cat4()
 user the variable name, the variable value, and what the location.
 
 \strong{IMPORTANT} This function (and therefore \code{\link[=cat4]{cat4()}} is only designed to
-be used interactively in a "qmd" or "rmd" notebook.
+be used interactively in a "qmd" or "rmd" notebook. Untested with
+\code{source()}.
 
-\strong{IMPORTANT} The line identification of the call file \strong{WILL} be
-incorrect if:
-the \emph{exact} same call is used in different chunk before the chunk used.
-
-For identifying the current file it is called in, it requires the
-\code{rstudioapi} package (i.e. it only works with that, so not pure R) to
-identify the document and save it.
+\strong{IMPORTANT} The line identification requires that the cursor is in the
+chunk being called. It is based on the \code{rstudioapi} package, so doesn't
+work with pure R.
 
 The code was inspired by this stackoverflow question:
 \url{https://stackoverflow.com/questions/59537482/how-to-get-line-number-of-a-function-call-in-r}.

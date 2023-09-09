@@ -1,11 +1,11 @@
 which_line <- function(skipCatCall = TRUE) {
   #' Print out the line number/s a function is called on
   #'
-  #' @description This function is not complete, but it is getting somewhere...
+  #' @description This function is experimental, but is getting somewhere...
   #'   Imagine when debugging, but without actual errors. You're just trying to
-  #'   find out the value of a variable at different stages. We want to know
-  #'   which line of a file that is on. This is therefore essentially a wrapper
-  #'   around using `.traceback(x)` when we haven't an actual error to
+  #'   find out the value of a variable at different stages. It is necessary to
+  #'   know which line of a file that is on. This is therefore essentially a
+  #'   wrapper around using `.traceback(x)` when we haven't an actual error to
   #'   traceback.
   #'
   #'   This function is mainly designed to be used inside the [cat4()] function.
@@ -13,18 +13,16 @@ which_line <- function(skipCatCall = TRUE) {
   #'   user the variable name, the variable value, and what the location.
   #'
   #'   **IMPORTANT** This function (and therefore [cat4()] is only designed to
-  #'   be used interactively in a "qmd" or "rmd" notebook.
+  #'   be used interactively in a "qmd" or "rmd" notebook. Untested with
+  #'   `source()`.
   #'
-  #'   **IMPORTANT** The line identification of the call file **WILL** be
-  #'   incorrect if:
-  #'     the *exact* same call is used in different chunk before the chunk used.
-  #'
-  #'   For identifying the current file it is called in, it requires the
-  #'   `rstudioapi` package (i.e. it only works with that, so not pure R) to
-  #'   identify the document and save it.
+  #'   **IMPORTANT** The line identification requires that the cursor is in the
+  #'   chunk being called. It is based on the `rstudioapi` package, so doesn't
+  #'   work with pure R.
   #'
   #'   The code was inspired by this stackoverflow question:
-  #'     [https://stackoverflow.com/questions/59537482/how-to-get-line-number-of-a-function-call-in-r]().
+  #'   [https://stackoverflow.com/questions/59537482/how-to-get-line-number-of-a-function-call-in-r]().
+  #'
   #'
   #' @param skipCatCall When nested in another function (for example [cat4()]),
   #'   should the call to that function (e.g.`cat4(x)`) be included in the print
@@ -61,18 +59,45 @@ which_line <- function(skipCatCall = TRUE) {
   if (length(functionList) == 0) ii <- 2 # for counting indents later
 
   # File -----------------------------------------------------------------------
-  # This only partially works, because it doesn't account for the same function
-  # appearing in an earlier chunk than the chunk being run.
+  # This only partially works, because it requires that the cursor was in the
+  # chunk being run. It defines the chunk by looking for "```", so a script may
+  # still work if those are not present.
+
+  # Which function is being checked? The full call (e.g. `cat4(x)`)
+  functionName <- functionList[[length(functionList)]]
 
   # Which file was the function called in?
-  filePath  <- rstudioapi::getSourceEditorContext()$path
-  rstudioapi::documentSave()
-  fileName  <- basename(filePath)
+  srcInfo    <- rstudioapi::getSourceEditorContext()
+  fileText   <- srcInfo$contents
+  cursorLine <- srcInfo$selection[[1]]$range$start[["row"]]
+  filePath   <- srcInfo$path
+  fileName   <- basename(filePath)
+
+  # Extract only text for the current chunk
+  chunkBreaks <- which(grepl(pattern = "```", x = fileText))
+  if (length(chunkBreaks) != 0) {
+    chunkStart <- chunkBreaks[max(which(chunkBreaks <= cursorLine))]
+    chunkEnd   <- chunkBreaks[min(which(chunkBreaks >= cursorLine))]
+    chunkText  <- fileText[chunkStart:chunkEnd]
+  } else {
+    chunkText  <- fileText  # quick attempt at making it viable for scripts
+  }
+
+  # Handle if the function is present in the chunk but commented out
+  hashLines <- gregexpr(pattern = "#", text = chunkText,
+                        fixed = TRUE) |> unlist()
+  hashLines[hashLines < 0] <- NA  # NA index of lines without a hash
+
+  funcLines <- gregexpr(pattern = functionName, text = chunkText,
+                        fixed = TRUE) |> unlist()
+  funcLines[funcLines < 0] <- NA  # NA index of lines without the function
+
+  # Ignore the commented lines, but keep as important for the order
+  commentLines <- which(hashLines < funcLines) # comment is before function
+  chunkText[commentLines] <- ""
 
   # Which line/s of the file is the function call found on?
-  fileText  <- readLines(filePath)
-  functionName <- functionList[[length(functionList)]]
-  fileLines <- grep(pattern = functionName, x = fileText, fixed = TRUE)
+  fileLines    <- grep(pattern = functionName, x = chunkText, fixed = TRUE)
 
   # If the function call occurs multiple times, we want to know which call is
   # which. This is the part that can be tripped up by not knowing which chunk
@@ -168,7 +193,7 @@ which_line <- function(skipCatCall = TRUE) {
   }
 
   cat("\n--", paste0(rep("--", ii - 1)),
-      lineBit, fileLines[fileLineIndex],
+      lineBit, fileLines[fileLineIndex] + chunkStart - 1,
       "of", fileName, "\n")
 }
 
