@@ -48,15 +48,17 @@ print_line <- function(lineType = "=",
   #' @export
 
   # Code ----------------------------------------------------------------------!
-  if (is.numeric(lineType)) {
-    lineType <- switch(lineType,
-                       "-", "=", "_", "~", "+", ">", "<", "|", "!", "\u00B0")
+  if (isTRUE(show)) {
+    if (is.numeric(lineType)) {
+      lineType <- switch(lineType,
+                         "-", "=", "_", "~", "+", ">", "<", "|", "!", "\u00B0")
+    }
+    if (is.null(lineType)) lineType <- "-"
+
+    # Create string
+    lineString <- paste0(rep(lineType, width * 3), collapse = "")
+
+    # Display
+    cat(rep("\n", nStart), lineString, rep("\n", nEnd), sep = "")
   }
-  if (is.null(lineType)) lineType <- "-"
-
-  # Create string
-  lineString <- paste0(rep(lineType, width * 3), collapse = "")
-
-  # Display
-  cat(rep("\n", nStart), lineString, rep("\n", nEnd), sep = "")
 }

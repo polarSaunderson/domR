@@ -46,13 +46,15 @@ which_line <- function(skipCatCall = TRUE) {
     if (ii > 1) {
       iiLine <- attr(functionList[[ii - 1]], "srcref")[[1]]
       if (ii == 2) {
-        lineBit <- "On line "
+        lineBit <- "On line"
       } else {
         lineBit <- "called from line "
       }
       cat("\n-- ", paste0(rep("-- ", ii - 2)),
           lineBit,
-          paste(iiLine, "of", functionList[[ii]]), sep = "")
+          paste(iiLine, " of ",
+                paste(functionList[[ii]], collapse = ""),
+                sep = ""))
     }
   }
 
@@ -193,7 +195,7 @@ which_line <- function(skipCatCall = TRUE) {
   }
 
   cat("\n--", paste0(rep("--", ii - 1)),
-      lineBit, fileLines[fileLineIndex] + chunkStart - 1,
+      lineBit, paste(fileLines[fileLineIndex + chunkStart - 1]),
       "of", fileName, "\n")
 }
 
