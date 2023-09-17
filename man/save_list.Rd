@@ -2,7 +2,7 @@
 % Please edit documentation in R/save_list.R
 \name{save_list}
 \alias{save_list}
-\title{A very simple wrapper around \code{\link[jsonlite:read_json]{jsonlite::write_json()}}}
+\title{A very simple wrapper for saving a list with \code{jsonlite}}
 \usage{
 save_list(x, filename)
 }
@@ -15,6 +15,6 @@ indicating where to save the list. Must included the file extension.}
 \description{
 This function will be expanded to also accommodate yaml, rds
 and rData output, and different json options. It currently just converts
-an R list to a json format, and saves it. It uses the default values of
-'pretty' = TRUE, and 'dataframe' = "columns".
+an R list to a json format using \code{jsonlite::serialize()}, and saves it
+via \code{\link[=writeLines]{writeLines()}}. It uses the default values of 'pretty' = TRUE.
 }

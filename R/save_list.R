@@ -1,10 +1,10 @@
 save_list <- function(x, filename) {
-  #' A very simple wrapper around [jsonlite::write_json()]
+  #' A very simple wrapper for saving a list with `jsonlite`
   #'
   #' @description This function will be expanded to also accommodate yaml, rds
   #'   and rData output, and different json options. It currently just converts
-  #'   an R list to a json format, and saves it. It uses the default values of
-  #'   'pretty' = TRUE, and 'dataframe' = "columns".
+  #'   an R list to a json format using `jsonlite::serialize()`, and saves it
+  #'   via [writeLines()]. It uses the default values of 'pretty' = TRUE.
   #'
   #' @param x The list to save.
   #' @param filename The filename (and path relative to the working directory)
@@ -17,8 +17,8 @@ save_list <- function(x, filename) {
   ext <- get_extension(filename)
 
   if (tolower(ext) == "json") {
-    jsonlite::write_json(x = x, path = filename,
-                         pretty = TRUE, dataframe = "columns")
+    x <- jsonlite::serializeJSON(x = x, pretty = TRUE)
+    writeLines(text = x, con = filename)
     print_on_saving(filename = filename)
   } else {
     stop("Currently only works for saving R lists as json files!")

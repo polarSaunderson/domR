@@ -1,10 +1,10 @@
 read_list <- function(filename) {
-  #' A very simple wrapper around [jsonlite::read_json()]
+  #' A very simple wrapper for reading a list with `jsonlite`
   #'
   #' @description This function will be expanded to also accommodate yaml, rds
   #'   and rData output, and different json options. It currently just converts
-  #'   a json file to an R list, using a default of `simplifyVector` = TRUE. It
-  #'   assumes that it is reading a json file created by [save_list()].
+  #'   a json file to an R list, using [jsonlite::unserializeJSON()]. It assumes
+  #'   that it is reading a json file created by [save_list()].
   #'
   #' @param filename The filename and path (relative to the working directory)
   #'   of the list.
@@ -16,10 +16,13 @@ read_list <- function(filename) {
 
   # Read if json
   if (tolower(ext) == "json") {
-    jsonlite::read_json(filename, simplifyVector = TRUE)
+    x <- readLines(con = filename) |>
+      jsonlite::unserializeJSON()
   } else {
     stop("Currently only works for .json files storing R lists!")
   }
+
+  return(x)
 }
 
 #' read_list <- function(fileName) {
