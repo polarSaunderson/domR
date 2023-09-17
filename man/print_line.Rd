@@ -4,7 +4,7 @@
 \alias{print_line}
 \title{Print a line to the console to help delineate output}
 \usage{
-print_line(lineType = "=", nStart = 1, nEnd = 1, width = 22)
+print_line(lineType = "=", nStart = 1, nEnd = 1, width = 22, show = TRUE)
 }
 \arguments{
 \item{lineType}{"string": The symbol/s that will be printed to create a
@@ -34,6 +34,9 @@ the number itself, enclose it as a string: "1". See example.}
 \item{width}{numeric: How many times should the 'lineType' be repeated?
 Usually unnecessary, but change it if screen is particularly wide or
 narrow.}
+
+\item{show}{LOGICAL; should the line be printed? Can be set as FALSE along
+with \code{\link[=cat2]{cat2()}} so it can be easily switched on or off for debugging.}
 }
 \description{
 Useful when working interactively in RStudio, and can be

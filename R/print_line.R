@@ -1,5 +1,9 @@
 ##
-print_line <- function(lineType = "=", nStart = 1, nEnd = 1, width = 22){
+print_line <- function(lineType = "=",
+                       nStart = 1,
+                       nEnd = 1,
+                       width = 22,
+                       show = TRUE){
   #' Print a line to the console to help delineate output
   #'
   #' @description Useful when working interactively in RStudio, and can be
@@ -28,6 +32,8 @@ print_line <- function(lineType = "=", nStart = 1, nEnd = 1, width = 22){
   #' @param width numeric: How many times should the 'lineType' be repeated?
   #'   Usually unnecessary, but change it if screen is particularly wide or
   #'   narrow.
+  #' @param show LOGICAL; should the line be printed? Can be set as FALSE along
+  #'   with [cat2()] so it can be easily switched on or off for debugging.
   #'
   #' @examples
   #'   print_line()
