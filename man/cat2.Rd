@@ -2,31 +2,40 @@
 % Please edit documentation in R/cat2.R
 \name{cat2}
 \alias{cat2}
-\title{Concatenate the name and variable}
+\title{Print out a variable's name and value}
 \usage{
 cat2(x, show = TRUE, name = NULL)
 }
 \arguments{
 \item{x}{The variable that should be displayed. It's name and value will be
-shown. Lists are unlisted. Not tested with complex data types - use with
-caution! If you just want the variable (and not the name), stick with
-\code{cat()}, or use \code{cat3()}, which basically adds a newline \verb{\\n} before and after x.}
+shown. Lists are fed to \code{\link[=cat_list]{cat_list()}}.
 
-\item{show}{LOGICAL: If FALSE, the function does nothing; it is useful if
-there are multiple \code{cat2()} calls throughout; set a variable at the
-beginning and use that as the 'show' argument in each \code{cat2()} call.
-Simply changing that to FALSE allows the function to be run without all
-the calls, but the calls can remain in place if further \code{cat2()} use is
-likely.}
+If you just want the variable (and not the name), stick with \code{cat()}, or
+use \code{cat3()}, which basically adds a newline \verb{\\n} before and after x.
 
-\item{name}{"string": Should an alternative name be used? By default,
-the name of x is used. However, if \code{\link[=cat2]{cat2()}} is nested, this will likely
-just end up as "x" for every variable.}
+\strong{Note:} This function has not been tested with complex data types - use
+with caution!}
+
+\item{show}{LOGICAL: If FALSE, the function just returns the input but does
+not print anything out. This behaviour is helpful as it allows multiple
+\code{\link[=cat2]{cat2()}} calls to be added throughout a function, and a single variable
+at the start can be used to turn the printing on for debugging, or off
+for use. Useful when it is likely that further debugging will be needed.}
+
+\item{name}{"string": Should an alternative name be used? By default, the
+name of 'x' is used. However, if \code{\link[=cat2]{cat2()}} is nested, this will likely
+just end up as "x" for every variable, so the true name can be entered
+here.}
 }
 \description{
-This function is likely useful because I don't know how to
-debug "correctly". When developing functions, it can be hard to know
-where the code is going wrong. Using \code{cat2()} prints out a variable and
-it's name. Sprinkle these at key locations in functions to see what is
-happening where. If it is a list, try \code{\link[=cat_list]{cat_list()}}.
+Using \code{\link[=cat2]{cat2()}} prints out a variable and it's name.
+
+This function is useful because I don't know how to debug "correctly".
+For example, when developing functions, it can be hard to know where the
+code is going wrong, particularly if there are no true errors.  However,
+the returned value can still be incorrect, but it is not clear at which
+stage a variable has which value.
+
+Sprinkling the \code{\link[=cat2]{cat2()}} function at key locations in functions allows us
+to see what is happening where within a function.
 }

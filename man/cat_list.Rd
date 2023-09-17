@@ -10,7 +10,8 @@ cat_list(
   listDepth = 0,
   nameLength = 1,
   maxDepth = 1,
-  verbose = TRUE
+  verbose = TRUE,
+  show = TRUE
 )
 }
 \arguments{
@@ -30,6 +31,13 @@ subsequent depth is marked by an extra "O" at the start of the line.}
 
 \item{verbose}{If TRUE (the default), data is shown in full; if FALSE, the
 dimensions of each item in the list are shown.}
+
+\item{show}{LOGICAL: If FALSE, the function does nothing; it is useful if
+there are multiple \code{cat_list()} calls throughout; set a variable at the
+beginning and use that as the 'show' argument in each \code{cat_list()} call.
+Simply changing that to FALSE allows the function to be run without all
+the calls, but the calls can remain in place if further \code{cat_list()} use
+is likely.}
 }
 \description{
 Printing a list doesn't look great, and \code{cat()} doesn't work.
