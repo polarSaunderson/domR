@@ -194,11 +194,11 @@ cat_list <- function(list,
                   yyTxt   <- yyTxt[!is.na(yyTxt)]
                   yyTxt   <- paste(yyTxt, collapse = "")
                   if (yy == 1) {
-                    cat(yyTxt, "\n")
+                    cat("'", yyTxt, "\n", sep = "")
                   } else if (yy == yyLines) {
-                    cat(indentTxt, yyTxt)
+                    cat(indentTxt, " ", yyTxt, "'", sep = "")
                   } else {
-                    cat(indentTxt, yyTxt, "\n")
+                    cat(indentTxt, " ", yyTxt, "\n")
                   }
                 }
                 jj <- jj + 1
