@@ -18,9 +18,9 @@ cat_list(
 \item{list}{The list to be printed out.}
 
 \item{name}{Name to be printed at the top of each list. If NULL (the
-default), it matches the name of the 'list' argument. This is mainly here
-for recursion so the "iiData" in the loop isn't used as the name for
-every subsequent nested list.}
+default), it matches the name of the 'list' argument. This arguement is
+mainly for recursion so the "iiData" in the loop isn't used as the name
+for every subsequent nested list.}
 
 \item{listDepth}{Used for recursive calls to track the depth; each
 subsequent depth is marked by an extra "O" at the start of the line.}
@@ -33,15 +33,16 @@ subsequent depth is marked by an extra "O" at the start of the line.}
 dimensions of each item in the list are shown.}
 
 \item{show}{LOGICAL: If FALSE, the function does nothing; it is useful if
-there are multiple \code{cat_list()} calls throughout; set a variable at the
-beginning and use that as the 'show' argument in each \code{cat_list()} call.
+there are multiple \code{\link[=cat_list]{cat_list()}} calls throughout; set a variable at the
+beginning and use that as the 'show' argument in each \code{\link[=cat_list]{cat_list()}} call.
 Simply changing that to FALSE allows the function to be run without all
-the calls, but the calls can remain in place if further \code{cat_list()} use
+the calls, but the calls can remain in place if further \code{\link[=cat_list]{cat_list()}} use
 is likely.}
 }
 \description{
-Printing a list doesn't look great, and \code{cat()} doesn't work.
+Printing a list doesn't look great, and \code{\link[=cat]{cat()}} doesn't work.
 This function is an alternative way to show the data in a list. It is
 still in progress, and currently only handles vectors, matrices and
-lists/data.frames.
+lists/data.frames prettily; everything else is just fed to \code{\link[=print]{print()}} and
+included.
 }

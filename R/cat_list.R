@@ -7,16 +7,17 @@ cat_list <- function(list,
                      show = TRUE) {
   #' Print out a list in a slightly prettier way (in my opinion!)
   #'
-  #' @description Printing a list doesn't look great, and `cat()` doesn't work.
+  #' @description Printing a list doesn't look great, and [cat()] doesn't work.
   #'   This function is an alternative way to show the data in a list. It is
   #'   still in progress, and currently only handles vectors, matrices and
-  #'   lists/data.frames.
+  #'   lists/data.frames prettily; everything else is just fed to [print()] and
+  #'   included.
   #'
   #' @param list The list to be printed out.
   #' @param name Name to be printed at the top of each list. If NULL (the
-  #'   default), it matches the name of the 'list' argument. This is mainly here
-  #'   for recursion so the "iiData" in the loop isn't used as the name for
-  #'   every subsequent nested list.
+  #'   default), it matches the name of the 'list' argument. This arguement is
+  #'   mainly for recursion so the "iiData" in the loop isn't used as the name
+  #'   for every subsequent nested list.
   #' @param listDepth Used for recursive calls to track the depth; each
   #'   subsequent depth is marked by an extra "O" at the start of the line.
   #' @param nameLength Used for recursion to help things align.
@@ -24,15 +25,18 @@ cat_list <- function(list,
   #' @param verbose If TRUE (the default), data is shown in full; if FALSE, the
   #'   dimensions of each item in the list are shown.
   #' @param show LOGICAL: If FALSE, the function does nothing; it is useful if
-  #'   there are multiple `cat_list()` calls throughout; set a variable at the
-  #'   beginning and use that as the 'show' argument in each `cat_list()` call.
+  #'   there are multiple [cat_list()] calls throughout; set a variable at the
+  #'   beginning and use that as the 'show' argument in each [cat_list()] call.
   #'   Simply changing that to FALSE allows the function to be run without all
-  #'   the calls, but the calls can remain in place if further `cat_list()` use
+  #'   the calls, but the calls can remain in place if further [cat_list()] use
   #'   is likely.
   #'
   #' @export
 
   # Code -----------------------------------------------------------------------
+  # Guard
+  if (isFALSE(show)) return(invisible(list))
+
   # Verify input
   listType <- methods::is(list)
   if ("list" %notIn% listType) {
@@ -114,7 +118,10 @@ cat_list <- function(list,
 
       iiName <- listNames[[ii]]
       if (!is.list(iiData)) {
-        iiName <- paste0(iiName, strrep(" ", nameLength - nchar(iiName)))
+        iiName    <- paste0(iiName, strrep(" ", nameLength - nchar(iiName)))
+        iiIndent  <- nchar(intoBit) + nchar(iiName) + 6 # 6 i " ||  " & a space
+        indentTxt <- rep(" ", iiIndent - 1) |> paste(collapse = "")
+        iiLimit   <- 80 - iiIndent
       }
 
       # Print out the items!
@@ -135,8 +142,9 @@ cat_list <- function(list,
                  maxDepth = maxDepth, nameLength = nameLength, # recursive call
                  verbose = verbose, show = show)
         cat("\n")
-      }  else if ("vector" %in% iiType) {
+      } else if ("vector" %in% iiType) {
         cat(intoBit)
+        cat(iiName, " ||  ")
         if (isFALSE(verbose)) {
           if ("logical" %in% iiType) {
             iiData <- paste("LOGICAL vector of length:", length(iiData))
@@ -146,8 +154,42 @@ cat_list <- function(list,
           } else {
             iiData <- paste("vector of length:", length(iiData))
           }
+          cat("\n")
+        } else {
+          iiData  <- as.character(iiData)
+          iiData  <- strsplit(iiData, " ") |> unlist()
+          iiCount <- length(iiData)
+
+          jj <- 1
+          currentLine   <- 1
+          currentPrint  <- c()
+          currentLength <- 0
+
+          while (jj <= iiCount) {
+            xj  <- iiData[jj]
+            xjL <- nchar(xj)
+            if (((currentLength + xjL) <= iiLimit) |
+                ((xjL == 1) & (nchar(iiData[jj + 1]) != 1))) {
+              currentPrint  <- c(currentPrint, xj)
+              currentLength <- currentLength + xjL + 1
+              jj <- jj + 1
+            } else {
+              if (currentLine == 1) {
+                cat(currentPrint, "\n")
+              } else {
+                cat(indentTxt, currentPrint, "\n")
+              }
+              currentLine   <- currentLine + 1
+              currentPrint  <- c()
+              currentLength <- 0
+            }
+          }
+          if (currentLine == 1) {
+            cat(currentPrint, "\n")
+          } else {
+            cat(indentTxt, currentPrint, "\n")
+          }
         }
-        cat(iiName, " || ", iiData, "\n")
       } else if ("NULL" %in% iiType) {
         cat(intoBit)
         cat(iiName, " ||  NULL \n")
@@ -162,6 +204,7 @@ cat_list <- function(list,
     cat(intoBit)
     cat("Empty List \n")
   }
+  return(invisible(list))
 }
 
 # TESTING

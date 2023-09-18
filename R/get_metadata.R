@@ -63,7 +63,7 @@ get_metadata <- function(...,
   }
 
   # Anything else?
-  dots        <- list(...)
+  dots <- list(...)
   if (length(dots) > 0) {
     dotNames  <- names(dots)
     dotValues <- dots #|> unlist() |> unname()
