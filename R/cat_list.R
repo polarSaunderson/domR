@@ -156,15 +156,18 @@ cat_list <- function(list,
           }
           cat("\n")
         } else {
+          # We want the output to align nicely
           iiData  <- as.character(iiData)
-          iiData  <- strsplit(iiData, " ") |> unlist()
+          iiData <- strsplit(x = iiData, split = " ") |> unlist()
           iiCount <- length(iiData)
 
+          # For tracking which part of the output has been shown
           jj <- 1
           currentLine   <- 1
           currentPrint  <- c()
           currentLength <- 0
 
+          # Loop through to keep printing until we're done
           while (jj <= iiCount) {
             xj  <- iiData[jj]
             xjL <- nchar(xj)
@@ -174,16 +177,38 @@ cat_list <- function(list,
               currentLength <- currentLength + xjL + 1
               jj <- jj + 1
             } else {
-              if (currentLine == 1) {
-                cat(currentPrint, "\n")
+              # We need to print
+              if (xjL < iiLimit) {
+                if (currentLine == 1) {
+                  cat(currentPrint, "\n")
+                } else {
+                  cat(indentTxt, currentPrint, "\n")
+                }
               } else {
-                cat(indentTxt, currentPrint, "\n")
+                # Handle long strings without a space break
+                tooLong <- strsplit(xj, "") |> unlist()
+                yyLines  <- ceiling(length(tooLong)/iiLimit)
+                for (yy in 1:yyLines) {
+                  yyIndex <- (1:iiLimit) + ((yy - 1) * iiLimit)
+                  yyTxt   <- tooLong[yyIndex]
+                  yyTxt   <- yyTxt[!is.na(yyTxt)]
+                  yyTxt   <- paste(yyTxt, collapse = "")
+                  if (yy == 1) {
+                    cat(yyTxt, "\n")
+                  } else if (yy == yyLines) {
+                    cat(indentTxt, yyTxt)
+                  } else {
+                    cat(indentTxt, yyTxt, "\n")
+                  }
+                }
+                jj <- jj + 1
               }
-              currentLine   <- currentLine + 1
               currentPrint  <- c()
+              currentLine   <- currentLine + 1
               currentLength <- 0
             }
           }
+          # Catch the last one
           if (currentLine == 1) {
             cat(currentPrint, "\n")
           } else {
