@@ -4,11 +4,20 @@
 \alias{get_metadata}
 \title{Prepare metadata about a file}
 \usage{
-get_metadata(..., format = "list", incGit = TRUE, incSession = TRUE)
+get_metadata(
+  ...,
+  blurb = NULL,
+  format = "list",
+  incGit = TRUE,
+  incSession = TRUE
+)
 }
 \arguments{
 \item{...}{Any additional information that needs to be included beyond the
-params and file code? Include as '"name" =  value'.}
+params and file code? Include as \code{"name" =  value}.}
+
+\item{blurb}{An blurb / summary / overview of the list being saved. Leave
+as NULL to ignore.}
 
 \item{format}{Which format do you want the metadata in? Options are "pdf",
 "NetCDF", "print", "named", or "yaml" / "json" / "list" (all the same).

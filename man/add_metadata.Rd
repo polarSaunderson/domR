@@ -17,7 +17,7 @@ add_metadata(
 In future, more options may be added if that makes sense.}
 
 \item{...}{Any additional information that needs to be included beyond the
-params and file code? Include as '"name" =  value'.}
+params and file code? Include as \code{"name" =  value}.}
 
 \item{incGit}{BINARY: Should the full output from \code{\link[=get_latest_git]{get_latest_git()}}
 be included? Even if FALSE, the hash of the last commit is still included

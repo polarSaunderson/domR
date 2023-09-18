@@ -1,7 +1,7 @@
 Package: domR
 Type: Package
 Title: Personal Package for Fundamental R Functions
-Version: 0.0.1.8
+Version: 0.0.1.9
 Authors@R: 
     person("Dominic", "Saunderson",
            role = c("aut", "cre"),

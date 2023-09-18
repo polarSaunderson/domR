@@ -1,4 +1,5 @@
 get_metadata <- function(...,
+                         blurb = NULL,
                          format = "list",
                          incGit = TRUE,
                          incSession = TRUE) {
@@ -14,7 +15,9 @@ get_metadata <- function(...,
   #'   arguments (e.g. '"extraMetadata" = "useful information"').
   #'
   #' @param ... Any additional information that needs to be included beyond the
-  #'   params and file code? Include as '"name" =  value'.
+  #'   params and file code? Include as `"name" =  value`.
+  #' @param blurb An blurb / summary / overview of the list being saved. Leave
+  #'   as NULL to ignore.
   #' @param format Which format do you want the metadata in? Options are "pdf",
   #'   "NetCDF", "print", "named", or "yaml" / "json" / "list" (all the same).
   #'   "list" is the default and the fallback if anything except one of these
@@ -44,6 +47,12 @@ get_metadata <- function(...,
   # Current file code (of the file that get_metadata was initially called from)
   fileCodes    <- paste0("fileCode<-<-<=>->->", get_file_codes())
   metadata     <- c(metadata, fileCodes)
+
+  # Blurb
+  if (!is.null(blurb)) {
+    blurbPair <- paste("blurb", blurb, sep = "<-<-<=>->->")
+    metadata  <- c(metadata, blurbPair)
+  }
 
   # Params from the .qmd
   if (exists("params")) {
