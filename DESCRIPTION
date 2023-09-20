@@ -1,15 +1,16 @@
 Package: domR
 Type: Package
 Title: Personal Package for Fundamental R Functions
-Version: 0.0.1.10
+Version: 0.1.0
 Authors@R: 
     person("Dominic", "Saunderson",
            role = c("aut", "cre"),
            email = "dominicsaunderson@gmail.com",
            comment = c(ORCID = "0000-0001-7440-0101"))
-Description: domR contains personal functions that help with how I approach R. 
-    It is likely that some of these ideas have much simpler solutions, but it 
-    works for me and helps me do things!
+Description: `domR` is a personal package for how I approach R. This package is 
+    mainly intended to help me learn how to write and share packages. The 
+    functions make sense to me but are very experimental and there are likely 
+    much better ways of solving these issues. Version 0.1.0-rc1.
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

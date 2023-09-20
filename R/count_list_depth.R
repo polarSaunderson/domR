@@ -8,7 +8,7 @@ count_list_depth <- function(list, depth = 0) {
   #' @param list The list to counted nested list levels within.
   #' @param depth Used to track the depth in recursive calls.
   #'
-  #' @export
+  #' @noRd
 
   # Code -----------------------------------------------------------------------
   if (!is.list(list)) {
