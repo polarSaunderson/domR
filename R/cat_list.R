@@ -51,6 +51,7 @@ cat_list <- function(list,
     } else {
       name <- set_if_null(name, deparse(substitute(list)))
       cat2(list, name = name)
+      return(invisible(list))
       stop("Please enter a list, data.frame or environment!")
     }
   } else {
