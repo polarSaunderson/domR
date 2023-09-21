@@ -1,12 +1,14 @@
 # domR
 
 ## Overview
-The domR package is a series of personal functions that I use in my own project.
-These are pretty fundamental functions, and follow my own personal logic of using R.
+`domR` is a personal package for how I approach R. 
+This package is mainly intended to help me learn how to write and share packages. 
+The functions make sense to me but are very experimental!
 
 ## Instructions
 This package is mainly a personal package, so it is not available on CRAN.
-To download this package directly from GitHub, you'll need to use the "devtools" package.
+To download this package directly from GitHub, you'll need to use the "devtools" 
+package.
 It's easiest to do this within RStudio.
 
 1) Install the [devtools](https://github.com/hadley/devtools). 
