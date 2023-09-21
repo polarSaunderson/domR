@@ -10,8 +10,7 @@ cat3(..., show = TRUE)
 \item{...}{The variable/s that should be displayed. The values will be
 collapsed down with a space between them and then shown using \code{\link[=cat]{cat()}}.
 Not tested with complex data types - use with caution! If you want the
-name of the variable and the variable, use \code{\link[=cat2]{cat2()}}; if the location too,
-use \code{\link[=cat4]{cat4()}}.}
+name of the variable and the variable, use \code{\link[=cat2]{cat2()}}.}
 
 \item{show}{logical If FALSE, the function does nothing; it is useful if
 there are multiple \code{\link[=cat3]{cat3()}} calls throughout; set a variable at the
