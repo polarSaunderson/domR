@@ -11,6 +11,13 @@ The public version of this repo can be accessed at:
   https://github.com/polarSaunderson/domR
 
 ## To-Do
+### 2023-10-08
+- [ ] Generalise the indent used in cat_list for the other cat functions
+- [ ] Vectorise cat2 and cat5
+- [ ] Add option in cat4 to display the full function (inc. arguments), or just
+        the function name
+- [ ] Work on which_line to figure out a useful output for the file part
+
 ### 2023-09-05
 - [ ] Think about how the timer functions could work in a hidden environment
 
