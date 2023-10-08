@@ -10,7 +10,7 @@ Authors@R:
 Description: `domR` is a personal package for how I approach R. This package is 
     mainly intended to help me learn how to write and share packages. The 
     functions make sense to me but are very experimental and there are likely 
-    much better ways of solving these issues. Version 0.1.1-rc2.
+    much better ways of solving these issues.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
