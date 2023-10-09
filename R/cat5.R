@@ -1,7 +1,7 @@
 cat5 <- function(x, show = TRUE, name = NULL) {
-  #' Print out a variable's name, type and value
+  #' Print out a variable's name, class and value
   #'
-  #' @description Using [cat5()] prints out a variable, it's type and it's name.
+  #' @description Using [cat5()] prints out a variable, it's class and it's name.
   #'
   #'   This function is useful because I don't know how to debug "correctly".
   #'   For example, when developing functions, it can be hard to know where the
@@ -15,7 +15,7 @@ cat5 <- function(x, show = TRUE, name = NULL) {
   #' @param x The variable that should be displayed. It's name and value will be
   #'   shown. Lists are fed to [cat_list()].
   #'
-  #'   If you just want the variable (and not the name and type), stick with
+  #'   If you just want the variable (and not the name and class), stick with
   #'   [cat()], or use [cat3()], which basically adds a newline `\n` before and
   #'   after x; if just the name and value, use [cat2()].
   #'
