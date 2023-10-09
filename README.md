@@ -1,4 +1,4 @@
-# domR
+# domR v0.1.2
 
 ## Overview
 `domR` is a personal package for how I approach R. 
