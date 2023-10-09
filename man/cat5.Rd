@@ -2,7 +2,7 @@
 % Please edit documentation in R/cat5.R
 \name{cat5}
 \alias{cat5}
-\title{Print out a variable's name, type and value}
+\title{Print out a variable's name, class and value}
 \usage{
 cat5(x, show = TRUE, name = NULL)
 }
@@ -10,7 +10,7 @@ cat5(x, show = TRUE, name = NULL)
 \item{x}{The variable that should be displayed. It's name and value will be
 shown. Lists are fed to \code{\link[=cat_list]{cat_list()}}.
 
-If you just want the variable (and not the name and type), stick with
+If you just want the variable (and not the name and class), stick with
 \code{\link[=cat]{cat()}}, or use \code{\link[=cat3]{cat3()}}, which basically adds a newline \verb{\\n} before and
 after x; if just the name and value, use \code{\link[=cat2]{cat2()}}.
 
@@ -29,8 +29,7 @@ just end up as "x" for every variable, so the true name can be entered
 here.}
 }
 \description{
-Using \code{\link[=cat5]{cat5()}} prints out a variable, it's type and it's name.
-
+Using \code{\link[=cat5]{cat5()}} prints out a variable, its class and its name.
 This function is useful because I don't know how to debug "correctly".
 For example, when developing functions, it can be hard to know where the
 code is going wrong, particularly if there are no true errors.  However,
