@@ -4,7 +4,7 @@
 \alias{get_packages}
 \title{Strip the output of sessionInfo for packages!}
 \usage{
-get_packages(seshInfo, whichPackages = "namespace", collapse = " ; ")
+get_packages(seshInfo = NULL, whichPackages = "namespace", collapse = " ; ")
 }
 \arguments{
 \item{seshInfo}{If NULL, \code{\link[=sessionInfo]{sessionInfo()}} will be called within the
@@ -13,8 +13,7 @@ and "attached"), it is better to run \code{seshInfo <- sessionInfo()}  first
 (before calling this function), and use that as input here.}
 
 \item{whichPackages}{Options are "base", "attached", or "namespace". Can be
-input as "b", "a", or "n". Will also work for "locale" (or "l") even
-though those are not packages.}
+input as "b", "a", or "n".}
 
 \item{collapse}{"string": All package names in a call are returned in a
 single vector. This argument determines how the package names should be
@@ -29,10 +28,9 @@ single string that can be the value in a name = value pair.
 
 The intention is to feed this function directly into a metadata call as
 (e.g. \code{"packages_attached" = get_packages(seshInfo, "attached")}). The
-options are "base" packages, "attached" packages or  packages in the
-"namespace" but not attached (i.e. those called as
-\code{domR::made_up_function()}). It can also be used to retrieve the
-"locale" part of the \code{\link[=sessionInfo]{sessionInfo()}} output.
+options are "base" packages; "attached" packages; or  packages in the
+"namespace" but not attached (i.e. those called with a "::", such as
+\code{domR::made_up_demo_function()}).
 
 \strong{NOTE!} This very much relies on the \code{\link[=sessionInfo]{sessionInfo()}} output remaining
 in the same formatting as it has now! It has not been extensively test

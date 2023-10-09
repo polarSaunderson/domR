@@ -22,9 +22,9 @@ get_sessionInfo <- function() {
   sessionList$Version  <- seshCaptured[which(grepl("R version", seshCaptured))]
   sessionList$Platform <- seshCaptured[which(grepl("Platform:", seshCaptured))]
   sessionList$Running  <- seshCaptured[which(grepl("Running u", seshCaptured))]
+  sessionList$locale   <- seshCaptured[which(grepl("locale", seshCaptured)) + 1]
 
   # More complex - reformatting the output
-  sessionList$locale    <- get_packages(seshInfo, whichPackages = "locale")
   sessionList$base      <- get_packages(seshInfo, whichPackages = "base")
   sessionList$attached  <- get_packages(seshInfo, whichPackages = "attached")
   sessionList$namespace <- get_packages(seshInfo, whichPackages = "namespace")

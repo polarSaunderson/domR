@@ -4,3 +4,4 @@
 ^\.Rproj\.user$
 ./.git
 ^LICENSE\.md$
+^dev_testing$
