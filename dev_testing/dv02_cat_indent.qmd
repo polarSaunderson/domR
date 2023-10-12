@@ -1,0 +1,193 @@
+```{r}
+pageWidth <- options()$width
+```
+
+
+```{r}
+1:10
+```
+
+
+```{r}
+tt <- c("an/annoyingly.long_stringWITHOUTanyBREAKS/that/would/be/nice:pausesANDnothingGOODorNOTHINGbad___123",
+        letters, month.name, LETTERS, LETTERS, 
+        "an/annoyingly.long_stringWITHOUTanyBREAKS/that/would/be/nice:pausesANDnothingGOODorNOTHINGbad___123")
+x <- tt
+
+# the variable name part
+xName   <- "tt"
+xTitle  <- paste0(xName, " || ")
+xLength <- nchar(xTitle)
+maxLength <- pageWidth - xLength
+indentTxt <- rep(" ", xLength - 1) |> paste(collapse = "")
+
+cat(xTitle)
+
+# prep data
+xData  <- as.character(x)
+xSplit <- strsplit(xData, split = " ") |> unlist()
+xCount <- length(xSplit)
+
+# to track
+ii <- 1
+currentLine   <- 1
+currentPrint  <- c()
+currentLength <- 0
+
+while (ii <= xCount) {
+  xi <- xData[ii]     # get the next bit of xData
+  xiLen <- nchar(xi)  # how long is it?
+  x2Len <- nchar(xData[ii + 1]) # how long is the next bit?
+  
+  if (((currentLength + xiLen) <= maxLength) | # add next bit if not beyond limit
+       ((xiLen == 1) & (x2Len != 1))) {        # or if only the next one is only 1
+    currentPrint  <- c(currentPrint, xi)
+    currentLength <- currentLength + xiLen + 1   # +1 is for the space
+    # ii <- ii + 1
+  } else {
+    # we need to print if it would become too long with the next bit added;
+    # if the next bit (that isn't included in currentPrint) is short enough,
+    # what we print depends on which line we're on
+    # else
+    # we split the long text up onto multiple lines
+
+    if (currentLine == 1) {  # 1st line needs no indent - the name was printed
+      cat(currentPrint)
+    } else {
+      cat(indentTxt, currentPrint)
+    }
+    if (currentLength == 0) {
+      cat("\n")
+    }
+
+    if (xiLen >= maxLength) {
+      # here is where we handle long strings without spaces
+      tooLong   <- strsplit(xi, "") |> unlist() # break into characters
+      longLines <- ceiling(length(tooLong)/maxLength) # how many lines needed?
+      
+      for (jj in 1:longLines) {
+        jjIndex <- (1:maxLength) + ((jj - 1) * maxLength) # which can fit?
+        jjText  <- tooLong[jjIndex]                       # grab them
+        jjText  <- jjText[!is.na(jjText)]
+        jjText  <- paste(jjText, collapse = "")
+        
+        # we want apostrophes to highlight the string continues over the lines
+        if (jj == 1) {
+          if (currentLine != 1) {
+            cat(indentTxt)
+          }
+          cat("'", jjText, "\n", sep = "")
+        } else if (jj != longLines) {
+          cat(indentTxt, " ", jjText, "\n", sep = "")
+        } else {
+          cat(indentTxt, " ", jjText, "'\n", sep = "") 
+        } 
+        # increment lines
+        currentLine   <- currentLine + 1
+      }
+    }
+    # reset as we've printed it
+    currentPrint  <- c() 
+    currentLength <- 0
+    currentLine   <- currentLine + 1
+    
+  }
+  ii <- ii + 1
+}
+if (currentLine == 1) {
+  cat(currentPrint, "\n")
+} else {
+  cat(indentTxt, currentPrint, "\n")
+}
+
+
+```
+
+```{r}
+longBit <- "an/annoyingly.long_stringWITHOUTanyBREAKS/that/would/be/nice:pausesANDnothingGOODorNOTHINGbad___123"
+x <- c(longBit, letters, LETTERS, longBit, month.abb, month.name, longBit, 1:100)
+
+# name part
+xName   <- "tt_test"
+xTitle  <- paste0(xName, " || ")
+xLength <- nchar(xTitle)
+maxLength <- pageWidth - xLength
+indentTxt <- rep(" ", xLength) |> paste(collapse = "")
+
+cat(xTitle)
+
+# prep data - split it up based on spaces
+xData  <- as.character(x)
+xSplit <- strsplit(xData, split = " ") |> unlist()
+xCount <- length(xSplit)
+
+# tracking prep
+ii <- 0
+currentLine <- 1
+currentPrint <- c()
+currentLength <- 0
+
+# keep going until all are done
+while (ii < xCount) {
+  # next parts
+  iiNext  <- xData[ii + 1]
+  iiAfter <- xData[ii + 2]
+  iiNextLen  <- nchar(iiNext)
+  iiAfterLen <- nchar(iiAfter)
+  
+  propLength <- currentLength + iiNextLen + 1 # length with the next included
+  remainLength <- maxLength - propLength
+  
+  # action depends on the length of the current and proposed content
+  if ((propLength < maxLength) |     # proposed length is short enough to extend
+      ((iiNextLen == 1) & (iiAfterLen != 1))) {    # or only a single extra 1
+    currentPrint  <- c(currentPrint, iiNext)
+    currentLength <- length(currentPrint) + sum(nchar(currentPrint)) - 1
+    ii <- ii + 1
+  } else {
+    # we want to display
+    # start a new line with an indent
+    if (currentLine != 1) {
+      cat("\n", indentTxt)
+    }
+    
+    # print what is there
+    if (currentLength > 0) {
+      cat(currentPrint)
+      currentPrint <- c()
+      currentLength <- 0
+      currentLine <- currentLine + 1
+    }
+    
+    # display long strings
+    if (iiNextLen > maxLength) {
+      tooLong <- strsplit(iiNext, "") |> unlist()   # split into characters
+      jjLines <- ceiling(length(tooLong)/maxLength) # how many lines are needed?
+      
+      for (jj in 1:jjLines) {
+        jjIndex <- (1:maxLength) + ((jj - 1) * maxLength) # which to include?
+        jjChars <- tooLong[jjIndex]
+        jjChars <- jjChars[!is.na(jjChars)]
+        jjText  <- paste(jjChars, collapse = "")
+        
+        # display, inc. apostrophes to group the string together
+        if (jj == 1 & currentLine == 1) cat(" '")
+        if (jj == 1 & currentLine != 1) cat("\n", indentTxt, " '", sep = "")
+        # if (jj == 1) cat("\n", indentTxt, "'")
+        if (jj != 1 & currentLine != 1) cat("   ", indentTxt)
+        cat(jjText)
+        if (jj != jjLines) cat("\n")
+        if (jj == jjLines) cat("'")
+        currentLine <- currentLine + 1
+      }
+      currentPrint <- c()
+      currentLength <- 0
+      ii <- ii + 1
+    }
+  }
+}
+cat("\n ", indentTxt, sep = "")
+cat(currentPrint)
+
+```
+
