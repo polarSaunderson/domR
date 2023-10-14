@@ -8,7 +8,7 @@ start_timer(...)
 }
 \arguments{
 \item{...}{"string" Name of the process that is being timed; all arguments
-are displayed in the order entered using \code{\link[=cat]{cat()}}.}
+are displayed in the order entered using \code{\link[=cat3]{cat3()}}.}
 }
 \description{
 This function and \code{\link[=end_timer]{end_timer()}} are mainly because I can never
@@ -21,8 +21,8 @@ levels of timing.
 }
 \examples{
 \dontrun{
-  start <- start_timer()
+  start <- start_timer("Slow code")
   Sys.sleep(0.2) # do code!
-  end_timer(start)
+  end_timer(start, "Slow code")
 }
 }
