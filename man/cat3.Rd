@@ -4,13 +4,25 @@
 \alias{cat3}
 \title{Print out input easier}
 \usage{
-cat3(..., show = TRUE)
+cat3(..., nStart = 1, nEnd = 1, show = TRUE)
 }
 \arguments{
+<<<<<<< HEAD
 \item{...}{The variable/s that should be displayed. The values will be
 collapsed down with a space between them and then shown using \code{\link[=cat]{cat()}}.
 Not tested with complex data types - use with caution! If you want the
 name of the variable and the variable, use \code{\link[=cat2]{cat2()}}.}
+=======
+\item{...}{The strings to display. The values are collapsed down with a
+space between them and then shown using \code{\link[=cat]{cat()}}. Not well-tested with
+complex data types - use with caution! If you want the name of the
+variable and the variable, use \code{\link[=cat2]{cat2()}}; if the location too, use
+\code{\link[=cat4]{cat4()}}.}
+
+\item{nStart}{numeric: How many \verb{\\n} should be included \emph{before} the line?}
+
+\item{nEnd}{numeric: How many \verb{\\n} should be included \emph{after} the line?}
+>>>>>>> dev
 
 \item{show}{logical If FALSE, the function does nothing; it is useful if
 there are multiple \code{\link[=cat3]{cat3()}} calls throughout; set a variable at the
@@ -20,8 +32,8 @@ the calls, but the calls can remain in place if further \code{\link[=cat3]{cat3(
 likely.}
 }
 \description{
-This function is simply \code{\link[=cat]{cat()}} but adds a newline \verb{\\n} before
-and after to quicken things up.
+This function is simply \code{\link[=cat]{cat()}} but optionally adds newlines
+(\verb{\\n}) before and/or after to quicken things up.
 
 \strong{Note:} The output format is not always exactly the same as \code{\link[=cat]{cat()}}. It
 is still in progress.
