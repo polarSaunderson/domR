@@ -28,7 +28,7 @@ now <- function(format = "F") {
   now <- switch(format,
                 "n" = today,                                  # "2022-11-23 15:24:43 AEST"
                 "F" = format(today, "%F"),                    # "2022-11-23"
-                "t" = format(today, "%H:%M:%s"),              # "15:24:43"
+                "t" = format(today, "%T"),                    # "15:24:43"
                 "Y" = format(today, "%Y") |> as.integer(),    # 2022
                 "m" = format(today, "%m") |> as.integer(),    # 11
                 "b" = format(today, "%b"),                    # "Nov"

@@ -1,20 +1,27 @@
-start_timer <- function() {
+start_timer <- function(...) {
   #' Starts the timer
   #'
   #' @description This function and [end_timer()] are mainly because I can never
   #'   remember the syntax/name of [proc.time()]. Simply call [start_timer()]
   #'   before the process you are timing begins, and then call [end_timer()]
-  #'   afterwards, feeding it with the output of [start_timer()].
+  #'   afterwards, feeding it with the output of [start_timer()]. See examples.
   #'
+  #'   These functions will be developed in future versions to allow multiple
+  #'   levels of timing.
+  #'
+  #' @param ... "string" Name of the process that is being timed; all arguments
+  #'   are displayed in the order entered using [cat3()].
   #' @examples
   #' \dontrun{
-  #'   start <- start_timer()
+  #'   start <- start_timer("Slow code")
   #'   Sys.sleep(0.2) # do code!
-  #'   end_timer(start)
+  #'   end_timer(start, "Slow code")
   #' }
   #' @export
 
   # Code -----------------------------------------------------------------------
+  cat3(">>>", ...,                                   # print process name
+       "started at:", now("t"), "...", nStart = 0)   # and current time
   return(proc.time())
 }
 
@@ -59,9 +66,9 @@ end_timer <- function(startTime, ..., sound = TRUE){
 
   # Code -----------------------------------------------------------------------
   timeTaken <- proc.time() - startTime
-  cat3(..., "done! It took: ")
+  cat3(">>>", ..., "done! It took:", nStart = 0)
   print(timeTaken)
-  print_line()
+  print_line(nStart = 0)
   if (isTRUE(sound)) {
     if (system.file(package = "beepr") != "") {
       beepr::beep()
