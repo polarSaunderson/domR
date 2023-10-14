@@ -1,11 +1,81 @@
 ```{r}
 pageWidth <- options()$width
+
+longBit <- "an/annoyingly.long_stringWITHOUTanyBREAKS/that/would/be/nice:pausesANDnothingGOODorNOTHINGbad___123"
+x <- c(longBit, letters, LETTERS, longBit, month.abb, month.name, longBit, 1:100)
+y <- c(letters, letters, month.abb, LETTERS, month.name)
 ```
 
 
 ```{r}
-1:10
+# name part
+xName   <- "x_name"
+xTitle  <- paste0(xName, " || ")
+xLength <- nchar(xTitle)
+maxLength <- pageWidth - xLength
+indentTxt <- rep(" ", xLength) |> paste(collapse = "")
+
+cat(xTitle)
+
+# data prep
+xBits  <- paste0(x, collapse = " ")
+xCount <- nchar(xBits)
+xSpaces <- gregexpr(" ", xBits) |> unlist()
+
+# track prep
+iiStart <- 1
+currentLine <- 1
+
+while(iiStart <= xCount) {
+  iiEnd   <- xSpaces[which(xSpaces < (iiStart + maxLength))]
+
+  if (length(iiEnd) > 0) {
+    if (max(iiEnd) < iiStart) {
+     iiEnd <- iiStart + maxLength
+     tooLong <- TRUE
+    } else {
+      iiEnd <- max(iiEnd)
+      tooLong <- FALSE
+    }
+  } else {
+    iiEnd <- iiStart + maxLength
+    tooLong <- TRUE
+  }
+  if (currentLine == 12) stop()
+  iiData <- substr(xBits, iiStart, iiEnd)
+  if (currentLine != 1) cat(indentTxt)
+  if (isTRUE(tooLong)) cat("'")
+  cat(iiData, "\n")
+  iiStart <- iiEnd + 1
+  currentLine <- currentLine + 1
+
+
+}
 ```
+
+
+```{r}
+}
+
+while(ii < xCount) {
+  iiIndex <- breaking[which(breaking < (ii + maxLength)) & which(breaking > ii)]
+  if (length(iiIndex) > 0) {
+    iiIndex <- max(iiIndex)
+  } else {
+    iiIndex <- maxLength + ii
+  }
+
+  iiData  <- substr(xBits, ii, iiIndex)
+  ii <- iiIndex + 1
+
+  cat2(currentLine)
+  if (currentLine != 1) cat(indentTxt)
+  cat(iiData, "\n")
+  currentLine <- currentLine + 1
+  stop()
+}
+```
+
 
 
 ```{r}
@@ -104,9 +174,6 @@ if (currentLine == 1) {
 ```
 
 ```{r}
-longBit <- "an/annoyingly.long_stringWITHOUTanyBREAKS/that/would/be/nice:pausesANDnothingGOODorNOTHINGbad___123"
-x <- c(longBit, letters, LETTERS, longBit, month.abb, month.name, longBit, 1:100)
-
 # name part
 xName   <- "tt_test"
 xTitle  <- paste0(xName, " || ")
@@ -188,6 +255,80 @@ while (ii < xCount) {
 }
 cat("\n ", indentTxt, sep = "")
 cat(currentPrint)
+
+```
+
+
+
+```{r}
+# name part
+xName   <- "tt_test"
+xTitle  <- paste0(xName, " || ")
+xLength <- nchar(xTitle)
+maxLength <- pageWidth - xLength
+indentTxt <- rep(" ", xLength) |> paste(collapse = "")
+
+cat(xTitle)
+
+# data prep
+xBits  <- paste0(x, collapse = " ")
+xCount <- nchar(xBits)
+
+# track prep
+ii <- 0
+currentLine <- 1
+
+while(ii < xCount) {
+  if (currentLine == 1) {
+    iiData <- substr(xBits, 1, maxLength)
+    ii <- maxLength
+  } else {
+    iiData <- substr(xBits, ii + 1, ii + maxLength)
+    cat(indentTxt)
+    ii <- ii + maxLength
+  }
+  
+  if (substr(iiData, 1, 1) == " ") iiData <- substr(iiData, 2, length(iiData))
+
+  cat(iiData, "\n")
+  currentLine <- currentLine + 1
+}
+```
+
+```{r}
+# name part
+xName   <- "tt_test"
+xTitle  <- paste0(xName, " || ")
+xLength <- nchar(xTitle)
+maxLength <- pageWidth - xLength
+indentTxt <- rep(" ", xLength) |> paste(collapse = "")
+
+cat(xTitle)
+
+# data prep
+xBits  <- paste0(x, collapse = " ")
+xCount <- nchar(xBits)
+
+# track prep
+ii <- 0
+currentLine <- 1
+breaking <- gregexpr(" ", xBits) |> unlist()
+
+while(ii < xCount) {
+  iiIndex <- breaking[which(breaking < (ii + maxLength))]
+  if (length(iiIndex) > 0) {
+    iiIndex <- max(iiIndex)
+  } else {
+    iiIndex <- maxLength + ii
+  }
+  cat2(iiIndex)
+  iiData  <- substr(xBits, ii, iiIndex)
+  ii <- iiIndex + 1
+
+  if (currentLine != 1) cat(indentTxt)
+  cat(iiData, "\n")
+  if(iiIndex > 300) stop()
+}
 
 ```
 
